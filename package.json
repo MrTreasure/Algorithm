@@ -1,0 +1,26 @@
+{
+  "name": "typescipt-blank-project",
+  "version": "1.0.0",
+  "description": "a blank project for typescript",
+  "main": "main.ts",
+  "scripts": {
+    "ts": "tsc && node ./dist/main",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrTreasure/typescript-blank-project.git"
+  },
+  "keywords": [
+    "typescript"
+  ],
+  "author": "MrTreasure",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MrTreasure/typescript-blank-project/issues"
+  },
+  "homepage": "https://github.com/MrTreasure/typescript-blank-project#readme",
+  "devDependencies": {
+    "typescript": "^2.6.2"
+  }
+}

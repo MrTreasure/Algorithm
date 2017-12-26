@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "fs-extra-promise-es6": "registry:dt/fs-extra-promise-es6#0.0.0+20160920151853"
+  }
+}
