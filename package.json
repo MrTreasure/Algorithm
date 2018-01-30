@@ -5,7 +5,8 @@
   "main": "main.ts",
   "scripts": {
     "ts": "tsc && node ./dist/main",
-    "build": "tsc"
+    "build": "tsc",
+    "test": "jest --no-cache --config jest.config.json"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,9 @@
   },
   "homepage": "https://github.com/MrTreasure/typescript-blank-project#readme",
   "devDependencies": {
+    "@types/jest": "^22.1.1",
+    "jest": "^22.1.4",
+    "ts-jest": "^22.0.2",
     "typescript": "^2.6.2"
   }
 }

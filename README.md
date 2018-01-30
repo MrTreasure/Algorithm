@@ -8,6 +8,8 @@ npm run build
 # To use type suggestion, if moulde have @types already, it won't be necnessary to intall types again
 npm install {module}
 npm install @types/{module}
+# To test
+npm run test
 ````
 
 > [Typescript官网](http://www.typescriptlang.org/)

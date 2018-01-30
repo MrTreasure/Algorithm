@@ -3,6 +3,7 @@
       "module": "commonjs",
       "outDir": "./dist",
       "allowJs": true,
+      "removeComments": true,
       "target": "esnext"
   },
   "include": [
