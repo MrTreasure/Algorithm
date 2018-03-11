@@ -4,7 +4,7 @@
       "tsConfigFile": "./tsconfig.json"
     }
   },
-  "collectCoverage": true,
+  "collectCoverage": false,
   "coverageDirectory": "test",
   "transform": {
     "^.+\\.tsx?$": "ts-jest",
