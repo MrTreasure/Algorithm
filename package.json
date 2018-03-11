@@ -1,7 +1,7 @@
 {
-  "name": "typescipt-blank-project",
+  "name": "Algorithm",
   "version": "1.0.0",
-  "description": "a blank project for typescript",
+  "description": "Learning algorithm",
   "main": "main.ts",
   "scripts": {
     "ts": "tsc && node ./dist/main",
