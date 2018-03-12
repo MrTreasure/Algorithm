@@ -1,9 +1,10 @@
 import { BinaryNode, ICompare } from './BinaryNode'
+import { Node } from './Node'
 
 export class Tree {
-  private root: BinaryNode
-  private left: BinaryNode
-  private right: BinaryNode
+  private root:Node<number>
+  private left: Node<number>
+  private right: Node<number>
 
   private list: any [] = []
 
@@ -11,20 +12,20 @@ export class Tree {
     this.root = null
   }
 
-  public getRoot(): BinaryNode {
+  public getRoot(): Node<number> {
     return this.root
   }
 
-  public insert(data) {
-    let node = new  BinaryNode(data)
+  public insert(data: number) {
+    let node = new  Node<number>(data)
     if (this.root === null) {
       this.root = node
     } else {
       let current = this.root
-      let parent: BinaryNode = null
+      let parent: Node<number> = null
       while(current) {
         parent = current
-        if (data < current.data) {
+        if (data < current.getData()) {
           current = current.left
           if (current === null) {
             parent.left = node
@@ -41,27 +42,27 @@ export class Tree {
     }
   }
 
-  public inOrder(node: BinaryNode) {
+  public inOrder(node: Node<number>) {
     if (! (node === null)) {
       this.inOrder(node.left)
-      this.list.push(node.show())
+      this.list.push(node.getData())
       this.inOrder(node.right)
     }
   }
 
-  public preOrder(node: BinaryNode) {
+  public preOrder(node: Node<number>) {
     if (!(node === null)) {
-      this.list.push(node.show())
+      this.list.push(node.getData())
       this.preOrder(node.left)
       this.preOrder(node.right)
     }
   }
 
-  public postOrder(node: BinaryNode) {
+  public postOrder(node: Node<number>) {
     if (!(node === null)) {
       this.preOrder(node.left)
       this.preOrder(node.right)
-      this.list.push(node.show())
+      this.list.push(node.getData())
     }
   }
 
@@ -73,7 +74,7 @@ export class Tree {
     this.list = []
   }
 
-  public getMin(node): BinaryNode {
+  public getMin(node): Node<number> {
     let current = node
     while(current.left) {
       current = current.left
@@ -81,7 +82,7 @@ export class Tree {
     return current
   }
 
-  public getMax(node): BinaryNode {
+  public getMax(node): Node<number> {
     let current = node
     while(current.right) {
       current = current.right
@@ -89,18 +90,17 @@ export class Tree {
     return current
   }
 
-  public find(data): BinaryNode {
+  public find(data): Node<number> {
     let current = this.root
     while(current) {
-      if(current.data === data) {
+      if(current.getData() === data) {
         return current
-      } else if (data <　current.data) {
+      } else if (data <　current.getData()) {
         current = current.left
       } else {
         current = current.right
       }
     }
-
     return null
   }
 }
