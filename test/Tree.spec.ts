@@ -48,7 +48,7 @@ describe('树的操作', () => {
 
   test('二叉树查找最大值', () => {
     let maxNode = tree.getMax(tree.getRoot())
-    console.log(maxNode.show())
+    console.log(maxNode.getData())
     expect(maxNode).not.toBe(null)
   })
 

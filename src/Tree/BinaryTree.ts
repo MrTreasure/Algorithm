@@ -103,4 +103,63 @@ export class Tree {
     }
     return null
   }
+
+  public removeNode(node, data) {
+    if (node === null) {
+      return null
+    }
+    if (data == node.getData()) {
+      if (node.left === null && node.right === null) {
+        return null
+      }
+      if (node.left === null) {
+        return  node.right
+      }
+      if (node.right === null) {
+        return  node.left
+      }
+      let tempNode: Node<number> = this.getMin(node.right)
+      node.setData(tempNode.getData())
+      node.right = this.removeNode(node.right, tempNode.getData())
+      return node
+    } else if (data < node.getData()) {
+      node.left = this.removeNode(node.right, data)
+      return node
+    } else {
+      node.right = this.removeNode(node.right, data)
+      return node
+    }
+  }
+
+  public iterativePreOrder(node: Node<number>) {
+    const stack: Node<number>[] = []
+    if (!(node === null)) {
+      stack.push(node)
+      while(stack.length !== 0) {
+        node = stack.pop()
+        this.list.push(node.getData())
+        if (node.right !== null) {
+          stack.push(node.right)
+        }
+        if (node.left !== null) {
+          stack.push(node.left)
+        }
+      }
+    }
+  }
+
+  public iterativeInOrder(node: Node<number>) {
+    const stack: Node<number>[] = []
+    while (node !== null || stack.length > 0) {
+      while (node !== null) {
+        stack.push(node)
+        node = node.left
+      }
+      if (stack.length > 0) {
+        node = stack.pop()
+        this.list.push(node.getData())
+        node = node.right
+      }
+    }
+  }
 }
