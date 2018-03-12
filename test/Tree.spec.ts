@@ -3,12 +3,14 @@ let arr = []
 let tree: Tree = new Tree()
 beforeAll(() => {
   for (let i = 0; i < 100000; i ++) {
-    arr.push(~~(Math.random() * 100))
+    arr.push(~~(Math.random() * 100000))
   }
   // console.log(arr)
+  console.time('Tree')
   for(let i = 0; i < arr.length; i ++) {
     tree.insert(arr[i])
   }
+  console.timeEnd('Tree')
 })
 
 describe('树的操作', () => {
