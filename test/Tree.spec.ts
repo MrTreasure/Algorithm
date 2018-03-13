@@ -2,8 +2,8 @@ import { Tree } from '../src/Tree/BinaryTree'
 let arr = []
 let tree: Tree = new Tree()
 beforeAll(() => {
-  for (let i = 0; i < 100000; i ++) {
-    arr.push(~~(Math.random() * 100000))
+  for (let i = 0; i < 10; i ++) {
+    arr.push(~~(Math.random() * 100))
   }
   // console.log(arr)
   console.time('Tree')
@@ -40,26 +40,32 @@ describe('树的操作', () => {
   //   expect(tree.getRoot()).not.toBe(null)
   // })
 
-  test('常规查找最大值', () => {
-    let max = Math.max(...arr)
-    console.log(max)
-    expect(max).not.toBe(null)
-  })
+  // test('常规查找最大值', () => {
+  //   let max = Math.max(...arr)
+  //   console.log(max)
+  //   expect(max).not.toBe(null)
+  // })
 
-  test('二叉树查找最大值', () => {
-    let maxNode = tree.getMax(tree.getRoot())
-    console.log(maxNode.getData())
-    expect(maxNode).not.toBe(null)
-  })
+  // test('二叉树查找最大值', () => {
+  //   let maxNode = tree.getMax(tree.getRoot())
+  //   console.log(maxNode.getData())
+  //   expect(maxNode).not.toBe(null)
+  // })
 
-  test('常规查找给定值', () => {
-    let val = arr.find(item => item === 99)
-    expect(val).not.toBe(null)
-  })
+  // test('常规查找给定值', () => {
+  //   let val = arr.find(item => item === 99)
+  //   expect(val).not.toBe(null)
+  // })
 
-  test('二叉树查找给定值', () => {
-    let node = tree.find(99)
-    expect(node).not.toBe(null)
-  })
+  // test('二叉树查找给定值', () => {
+  //   let node = tree.find(99)
+  //   expect(node).not.toBe(null)
+  // })
   
+  test('二叉树非递归排序', () => {
+    tree.iterativeInOrder(tree.getRoot())
+    console.log(tree.getList())
+    console.log(tree)
+    expect(tree.getList()).not.toBe(null)
+  })
 })
