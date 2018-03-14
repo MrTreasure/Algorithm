@@ -1,10 +1,11 @@
 import { Tree } from './Tree/BinaryTree'
-
+import { RBTree } from './Tree/RBTree'
 const arr = []
 for (let i = 0; i < 10; i ++) {
   arr.push(~~(Math.random() * 100))
 }
 
+let rbTree = new RBTree()
 
 
 let tree = new Tree()
