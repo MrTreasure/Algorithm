@@ -4,7 +4,8 @@
       "outDir": "./dist",
       "allowJs": true,
       "removeComments": true,
-      "target": "esnext"
+      "target": "esnext",
+      "sourceMap": true
   },
   "include": [
       "./src/**/*"

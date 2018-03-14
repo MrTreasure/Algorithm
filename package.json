@@ -4,7 +4,7 @@
   "description": "Learning algorithm",
   "main": "main.ts",
   "scripts": {
-    "ts": "tsc -w ./src/main.ts --outDir ./dist && node ./dist/main",
+    "ts": "tsc -w && node ./dist/main",
     "build": "tsc -w",
     "test": "jest --no-cache --config jest.config.json"
   },

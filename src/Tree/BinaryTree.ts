@@ -1,4 +1,3 @@
-import { BinaryNode, ICompare } from './BinaryNode'
 import { Node } from './Node'
 
 export class Tree {
@@ -50,7 +49,7 @@ export class Tree {
     }
   }
 
-  public preOrder(node: Node<number>) {
+  public preOrder(node: Node<number>) {5
     if (!(node === null)) {
       this.list.push(node.getData())
       this.preOrder(node.left)
