@@ -15,13 +15,16 @@ export class Tree {
 
   public insert(data: number) {
     let node = new  Node<number>(data)
+
     if (this.root === null) {
       this.root = node
     } else {
       let current = this.root
       let parent: Node<number> = null
+
       while(current) {
         parent = current
+        
         if (data < current.getData()) {
           current = current.left
           if (current === null) {
@@ -30,12 +33,15 @@ export class Tree {
           }
         } else {
           current = current.right
+
           if (current === null) {
             parent.right = node
             break
           }
         }
+
       }
+
     }
   }
 
@@ -73,22 +79,27 @@ export class Tree {
 
   public getMin(node): Node<number> {
     let current = node
+
     while(current.left) {
       current = current.left
     }
+
     return current
   }
 
   public getMax(node): Node<number> {
     let current = node
+
     while(current.right) {
       current = current.right
     }
+
     return current
   }
 
   public find(data): Node<number> {
     let current = this.root
+
     while(current) {
       if(current.getData() === data) {
         return current
@@ -98,6 +109,7 @@ export class Tree {
         current = current.right
       }
     }
+
     return null
   }
 
@@ -105,6 +117,7 @@ export class Tree {
     if (node === null) {
       return null
     }
+
     if (data == node.getData()) {
       if (node.left === null && node.right === null) {
         return null
@@ -126,10 +139,12 @@ export class Tree {
       node.right = this.removeNode(node.right, data)
       return node
     }
+
   }
 
   public iterativePreOrder(node: Node<number>) {
     const stack: Node<number>[] = []
+
     if (!(node === null)) {
       stack.push(node)
       while(stack.length !== 0) {
@@ -143,15 +158,19 @@ export class Tree {
         }
       }
     }
+
   }
 
   public iterativeInOrder(node: Node<number>) {
     const stack: Node<number>[] = []
+    
     while (node !== null || stack.length > 0) {
+
       while (node !== null) {
         stack.push(node)
         node = node.left
       }
+      
       if (stack.length > 0) {
         node = stack.pop()
         this.list.push(node.getData())

@@ -25,10 +25,13 @@ export class RBTree {
   private leftRotate(node: RBNode) {
     let temp = node.right // 定义 temp 为 node 的右节点 A
     node.right = temp.left // 把 temp 节点的左节点移动到 node 节点的右节点 B
+
     if (temp.left !== this.nil) {
       temp.left.parent = node // 如果 temp 节点有左节点则指定其父节点为 node
     }
+
     temp.parent = node.parent
+
     if (node.parent === this.nil) {
       this.root = temp
     } else if (node === node.parent.left) { // 如果 node 节点是其父节点的左节点 则 temp 指向 node 节点父节点的作节点
@@ -36,6 +39,7 @@ export class RBTree {
     } else {
       node.parent.right = temp
     }
+    
     temp.left = node // BB
     node.parent = temp // AA
   }
@@ -43,10 +47,13 @@ export class RBTree {
   private rightRotate(node: RBNode) {
     let temp = node.left
     node.left = temp.right
+
     if (temp.right !== this.nil) {
       temp.right.parent = node
     }
+
     temp.parent = node.parent
+
     if (node.parent === this.nil) {
       this.root = temp
     } else if (node === node.parent.left) {
@@ -54,14 +61,18 @@ export class RBTree {
     } else {
       node.parent.right = temp
     }
+
     temp.right = node
     node.parent = temp
   }
 
   private insertFixUp(node: RBNode) {
+
     while (node.parent.color === Type.RED) {
+
       if (node.parent === node.parent.parent.left) {
         let temp = node.parent.parent.right
+
         if (temp.color === Type.RED) {
           node.parent.color = Type.BLACK
           temp.color = Type.BLACK
@@ -71,11 +82,15 @@ export class RBTree {
           node = node.parent
           this.leftRotate(node)
         }
+
         node.parent.color = Type.BLACK
         node.parent.parent.color = Type.RED
         this.rightRotate(node.parent.parent)
+
       } else {
+
         let temp = node.parent.parent.left
+
         if (temp.color === Type.RED) {
           node.parent.color = Type.BLACK
           temp.color = Type.BLACK
@@ -85,11 +100,14 @@ export class RBTree {
           node = node.parent
           this.rightRotate(node)
         }
+
         node.parent.color = Type.BLACK
         node.parent.parent.color = Type.RED
         this.leftRotate(node.parent.parent)
       }
+
     }
+
     this.root.color = Type.BLACK
   }
 
@@ -97,6 +115,7 @@ export class RBTree {
     let insert = new RBNode(data, Type.BLACK)
     let temp = this.nil
     let node = this.root
+
     while (node !== this.nil) {
       temp = node
       if (data < node.data) {
@@ -105,7 +124,9 @@ export class RBTree {
         temp = node.right
       }
     }
+
     insert.parent = temp
+
     if (temp === this.nil) {
       this.root = insert
     } else if (data < temp.left) {
@@ -113,6 +134,7 @@ export class RBTree {
     } else {
       temp.right = insert
     }
+
     insert.left = this.nil
     insert.right = this.nil
     insert.color = Type.RED
@@ -129,7 +151,6 @@ export class RBTree {
       y.parent = x.parent
     }
   }
-
 } 
 
 
