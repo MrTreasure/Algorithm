@@ -8,8 +8,6 @@
  * 5.从任一节点到其每个叶子的所有路径都包含相同数目的黑色节点
  */
 export class RBTree {
-  public left: RBNode
-  public right: RBNode
   public root: RBNode
   /**
    * @prop {RBNode} nil 一个nil节点 任何叶子节点及空几点都指向这个节点（节约内存）
@@ -17,8 +15,6 @@ export class RBTree {
   private readonly nil: RBNode = new RBNode(null, Type.BLACK)
 
   constructor() {
-    this.left = this.nil
-    this.right = this.nil
     this.root = this.nil
   }
   
@@ -122,7 +118,19 @@ export class RBTree {
     insert.color = Type.RED
     this.insertFixUp(insert)
   }
-}
+
+  private transplant(x: RBNode, y: RBNode) {
+    if (x.parent === this.nil) {
+      this.root = x
+    } else if (x === x.parent.left) {
+      x.parent.left = y
+    } else {
+      x.parent.right = y
+      y.parent = x.parent
+    }
+  }
+
+} 
 
 
 class RBNode {

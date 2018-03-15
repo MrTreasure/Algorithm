@@ -2,8 +2,6 @@ import { Node } from './Node'
 
 export class Tree {
   private root:Node<number>
-  private left: Node<number>
-  private right: Node<number>
 
   private list: any [] = []
 
