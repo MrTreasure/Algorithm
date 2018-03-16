@@ -113,33 +113,38 @@ export class Tree {
     return null
   }
 
-  public removeNode(node, data) {
-    if (node === null) {
-      return null
-    }
-
-    if (data == node.getData()) {
-      if (node.left === null && node.right === null) {
-        return null
-      }
-      if (node.left === null) {
-        return  node.right
-      }
-      if (node.right === null) {
-        return  node.left
-      }
-      let tempNode: Node<number> = this.getMin(node.right)
-      node.setData(tempNode.getData())
-      node.right = this.removeNode(node.right, tempNode.getData())
-      return node
-    } else if (data < node.getData()) {
-      node.left = this.removeNode(node.right, data)
-      return node
+  private transPlant(u, v) {
+    if (u.parent === null) {
+      this.root = u
+    } else if (u == u.parent.left) {
+      u.parent.left = v
     } else {
-      node.right = this.removeNode(node.right, data)
-      return node
+      u.parent.right = v
     }
+    if (v !== null) {
+      v.parent = u.parent
+    }
+  }
 
+  public deleteNode(node: Node<number>) {
+    if (node.left == null) {
+      this.transPlant(node, node.right)
+    } else if (node.right == null) {
+      this.transPlant(node, node.left)
+    } else {
+      let current = this.getMin(node.right)
+
+      if (current.parent !== node) {
+        this.transPlant(current, current.right)
+        current.right = node.right
+        current.right.parent = current
+      }
+      
+      this.transPlant(node, current)
+      current.left = node.left
+      current.left.parent = current
+
+    }
   }
 
   public iterativePreOrder(node: Node<number>) {
