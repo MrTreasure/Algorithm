@@ -1,23 +1,23 @@
 export class Queue<T> {
   private list: T[]
 
-  constructor() {
+  constructor () {
     this.list = []
   }
 
-  public enQueue(data: T) {
+  public enQueue (data: T) {
     this.list.push(data)
   }
 
-  public deQueue(): T {
+  public deQueue (): T {
     return this.list.shift()
   }
 
-  public sizeOf(): number {
+  public sizeOf (): number {
     return this.list.length
   }
 
-  public clearAll() {
+  public clearAll () {
     this.list = []
   }
 }

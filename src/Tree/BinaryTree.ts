@@ -1,20 +1,20 @@
 import { Node } from './Node'
 
 export class Tree {
-  private root:Node<number>
+  private root: Node<number>
 
   private list: any [] = []
 
-  constructor() {
+  constructor () {
     this.root = null
   }
 
-  public getRoot(): Node<number> {
+  public getRoot (): Node<number> {
     return this.root
   }
 
-  public insert(data: number) {
-    let node = new  Node<number>(data)
+  public insert (data: number) {
+    let node = new Node<number>(data)
 
     if (this.root === null) {
       this.root = node
@@ -22,9 +22,9 @@ export class Tree {
       let current = this.root
       let parent: Node<number> = null
 
-      while(current) {
+      while (current) {
         parent = current
-        
+
         if (data < current.getData()) {
           current = current.left
           if (current === null) {
@@ -45,7 +45,7 @@ export class Tree {
     }
   }
 
-  public inOrder(node: Node<number>) {
+  public inOrder (node: Node<number>) {
     if (! (node === null)) {
       this.inOrder(node.left)
       this.list.push(node.getData())
@@ -53,7 +53,7 @@ export class Tree {
     }
   }
 
-  public preOrder(node: Node<number>) {5
+  public preOrder (node: Node<number>) {
     if (!(node === null)) {
       this.list.push(node.getData())
       this.preOrder(node.left)
@@ -61,7 +61,7 @@ export class Tree {
     }
   }
 
-  public postOrder(node: Node<number>) {
+  public postOrder (node: Node<number>) {
     if (!(node === null)) {
       this.preOrder(node.left)
       this.preOrder(node.right)
@@ -69,41 +69,41 @@ export class Tree {
     }
   }
 
-  public getList(): any[] {
+  public getList (): any[] {
     return this.list
   }
 
-  public clearList() {
+  public clearList () {
     this.list = []
   }
 
-  public getMin(node): Node<number> {
+  public getMin (node): Node<number> {
     let current = node
 
-    while(current.left) {
+    while (current.left) {
       current = current.left
     }
 
     return current
   }
 
-  public getMax(node): Node<number> {
+  public getMax (node): Node<number> {
     let current = node
 
-    while(current.right) {
+    while (current.right) {
       current = current.right
     }
 
     return current
   }
 
-  public find(data): Node<number> {
+  public find (data): Node<number> {
     let current = this.root
 
-    while(current) {
-      if(current.getData() === data) {
+    while (current) {
+      if (current.getData() === data) {
         return current
-      } else if (data <　current.getData()) {
+      } else if (data < current.getData()) {
         current = current.left
       } else {
         current = current.right
@@ -113,20 +113,7 @@ export class Tree {
     return null
   }
 
-  private transPlant(u, v) {
-    if (u.parent === null) {
-      this.root = u
-    } else if (u == u.parent.left) {
-      u.parent.left = v
-    } else {
-      u.parent.right = v
-    }
-    if (v !== null) {
-      v.parent = u.parent
-    }
-  }
-
-  public deleteNode(node: Node<number>) {
+  public deleteNode (node: Node<number>) {
     if (node.left == null) {
       this.transPlant(node, node.right)
     } else if (node.right == null) {
@@ -139,7 +126,7 @@ export class Tree {
         current.right = node.right
         current.right.parent = current
       }
-      
+
       this.transPlant(node, current)
       current.left = node.left
       current.left.parent = current
@@ -147,12 +134,12 @@ export class Tree {
     }
   }
 
-  public iterativePreOrder(node: Node<number>) {
+  public iterativePreOrder (node: Node<number>) {
     const stack: Node<number>[] = []
 
     if (!(node === null)) {
       stack.push(node)
-      while(stack.length !== 0) {
+      while (stack.length !== 0) {
         node = stack.pop()
         this.list.push(node.getData())
         if (node.right !== null) {
@@ -166,16 +153,16 @@ export class Tree {
 
   }
 
-  public iterativeInOrder(node: Node<number>) {
+  public iterativeInOrder (node: Node<number>) {
     const stack: Node<number>[] = []
-    
+
     while (node !== null || stack.length > 0) {
 
       while (node !== null) {
         stack.push(node)
         node = node.left
       }
-      
+
       if (stack.length > 0) {
         node = stack.pop()
         this.list.push(node.getData())
@@ -183,4 +170,18 @@ export class Tree {
       }
     }
   }
+
+  private transPlant (u, v) {
+    if (u.parent === null) {
+      this.root = u
+    } else if (u === u.parent.left) {
+      u.parent.left = v
+    } else {
+      u.parent.right = v
+    }
+    if (v !== null) {
+      v.parent = u.parent
+    }
+  }
+
 }

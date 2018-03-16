@@ -1,6 +1,6 @@
 /**
  * @class RBTree
- * @description 
+ * @description
  * 1.节点是红色或者黑色
  * 2.根节点是黑色
  * 3.每个叶子节点都是黑色的空节点
@@ -14,15 +14,44 @@ export class RBTree {
    */
   private readonly nil: RBNode = new RBNode(null, Type.BLACK)
 
-  constructor() {
+  constructor () {
     this.root = this.nil
   }
-  
+
+  public insert (data) {
+    let insert = new RBNode(data, Type.BLACK)
+    let temp = this.nil
+    let node = this.root
+
+    while (node !== this.nil) {
+      temp = node
+      if (data < node.data) {
+        temp = node.left
+      } else {
+        temp = node.right
+      }
+    }
+
+    insert.parent = temp
+
+    if (temp === this.nil) {
+      this.root = insert
+    } else if (data < temp.left) {
+      temp.left = insert
+    } else {
+      temp.right = insert
+    }
+
+    insert.left = this.nil
+    insert.right = this.nil
+    insert.color = Type.RED
+    this.insertFixUp(insert)
+  }
+
   /**
-   * 
    * @param {RBNode} node 左旋的操作节点
    */
-  private leftRotate(node: RBNode) {
+  private leftRotate (node: RBNode) {
     let temp = node.right // 定义 temp 为 node 的右节点 A
     node.right = temp.left // 把 temp 节点的左节点移动到 node 节点的右节点 B
 
@@ -39,12 +68,11 @@ export class RBTree {
     } else {
       node.parent.right = temp
     }
-    
     temp.left = node // BB
     node.parent = temp // AA
   }
 
-  private rightRotate(node: RBNode) {
+  private rightRotate (node: RBNode) {
     let temp = node.left
     node.left = temp.right
 
@@ -66,7 +94,7 @@ export class RBTree {
     node.parent = temp
   }
 
-  private insertFixUp(node: RBNode) {
+  private insertFixUp (node: RBNode) {
 
     while (node.parent.color === Type.RED) {
 
@@ -111,37 +139,7 @@ export class RBTree {
     this.root.color = Type.BLACK
   }
 
-  public insert(data) {
-    let insert = new RBNode(data, Type.BLACK)
-    let temp = this.nil
-    let node = this.root
-
-    while (node !== this.nil) {
-      temp = node
-      if (data < node.data) {
-        temp = node.left
-      } else {
-        temp = node.right
-      }
-    }
-
-    insert.parent = temp
-
-    if (temp === this.nil) {
-      this.root = insert
-    } else if (data < temp.left) {
-      temp.left = insert
-    } else {
-      temp.right = insert
-    }
-
-    insert.left = this.nil
-    insert.right = this.nil
-    insert.color = Type.RED
-    this.insertFixUp(insert)
-  }
-
-  private transplant(x: RBNode, y: RBNode) {
+  private transplant (x: RBNode, y: RBNode) {
     if (x.parent === this.nil) {
       this.root = x
     } else if (x === x.parent.left) {
@@ -151,8 +149,7 @@ export class RBTree {
       y.parent = x.parent
     }
   }
-} 
-
+}
 
 class RBNode {
   public left: RBNode
@@ -162,12 +159,12 @@ class RBNode {
   public data: any
 
   /**
-   * 
+   *
    * @param {any} data 保存的数据
    * @param {Type} color 节点的颜色
    * @param {RBNode} nil 由树生成的全局空节点
    */
-  constructor(data, color: Type) {
+  constructor (data, color: Type) {
     this.data = data
     this.left = null
     this.right = null

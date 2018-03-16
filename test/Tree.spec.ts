@@ -7,7 +7,7 @@ beforeAll(() => {
   }
   // console.log(arr)
   console.time('Tree')
-  for(let i = 0; i < arr.length; i ++) {
+  for (let i = 0; i < arr.length; i ++) {
     tree.insert(arr[i])
   }
   console.timeEnd('Tree')
@@ -61,7 +61,7 @@ describe('树的操作', () => {
   //   let node = tree.find(99)
   //   expect(node).not.toBe(null)
   // })
-  
+
   test('二叉树非递归排序', () => {
     tree.iterativeInOrder(tree.getRoot())
     console.log(tree.getList())
