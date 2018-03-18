@@ -7,9 +7,8 @@ for (let i = 0; i < 10; i ++) {
 
 let rbTree = new RBTree()
 
-
 let tree = new Tree()
-for(let i = 0; i < arr.length; i ++) {
+for (let i = 0; i < arr.length; i ++) {
   tree.insert(arr[i])
 }
 tree.inOrder(tree.getRoot())
