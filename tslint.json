@@ -2,10 +2,6 @@
   "extends": "tslint-config-standard",
   "globals": {
     "require": true
-<<<<<<< HEAD
   },
   "exculde": "node_modules/"
-=======
-  }
->>>>>>> b4dbf31c21f3a4c25f09a5953086557a12e79e6d
 }
