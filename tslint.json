@@ -1,6 +1,7 @@
 {
-    "extends": "tslint-config-standard",
-    "globals": {
-      "require": true
-    }
-  }
+  "extends": "tslint-config-standard",
+  "globals": {
+    "require": true
+  },
+  "exculde": "node_modules/"
+}
