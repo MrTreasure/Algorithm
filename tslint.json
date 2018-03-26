@@ -3,5 +3,5 @@
   "globals": {
     "require": true
   },
-  "exculde": "node_modules/"
+  "exculde": "node_modules/**"
 }

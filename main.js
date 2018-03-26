@@ -1,10 +1,6 @@
-const fs = require('fs-extra')
-const zlib = require('zlib')
-
-const main = async () => {
-  const file = await fs.readFile('./Treasure.png')
-  zlib.gzip(file, (err, buffer) => {
-    fs.writeFile('./Treasure.png.gz', buffer)
-  })
-}
-main()
+process.on('uncaughtException', err => {
+  console.log(JSON.stringify(err))
+})
+console.log('hello')
+throw new Error('error')
+console.log('world')
