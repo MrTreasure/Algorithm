@@ -1,6 +1,6 @@
-process.on('uncaughtException', err => {
-  console.log(JSON.stringify(err))
-})
-console.log('hello')
-throw new Error('error')
-console.log('world')
+const arr = [3, 5, 6, 2, 4, 5, 1, 11]
+for (let item of arr) {
+  setTimeout(() => {
+    console.log(item)
+  }, item * 100)
+}
