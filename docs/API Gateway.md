@@ -3,3 +3,14 @@
 > API网关是一种在微服务架构中对外提供统一接口，队内进行内部服务调用的中间层。API网关可以分发路由、转换协议、收集数据、继承通用接口 比如认证、以及限流。
 
 ![API Gateway as an entry point to microservices](https://blog-assets.risingstack.com/2017/07/api-gateway-1.png)
+
+## API网关能够实现的功能
+1. 统一的认证
+![Authentication](https://blog-assets.risingstack.com/2017/07/api-gateway-auth-1.png)
+2. 整合、收集数据
+![Data aggregation](https://blog-assets.risingstack.com/2017/07/api-gateway-aggregation-1.png)
+3. 转换数据格式
+![Serialization format transformation](https://blog-assets.risingstack.com/2017/07/api-gateway-format-2.png)
+4. 转换协议
+![Protocol transformation](https://blog-assets.risingstack.com/2017/07/api-gateway-protocol.png)
+5. 流量限制以及缓存
