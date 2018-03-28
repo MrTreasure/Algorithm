@@ -9,7 +9,7 @@
 * [每个程序员都应该知道的延迟数](./docs/每个程序员都应该知道的延迟数.md)
 
 ## 算法
-* [消息队列](./src/MessageQueue)
+* [消息队列](./src/RabbitMQ)
 * [栈结构](./src/Stack)
 * [二次树](./src/Tree)
 
