@@ -1,6 +1,15 @@
-const arr = [3, 5, 6, 2, 4, 5, 1, 11]
-for (let item of arr) {
-  setTimeout(() => {
-    console.log(item)
-  }, item * 100)
+const babylon = require('babylon')
+const fs = require('fs-extra')
+
+const opt = {
+  sourceType: 'module'
 }
+
+async function main() {
+  let script = await fs.readFile('script.js')
+  script = script.toString()
+  const output = babylon.parse(script, opt)
+  fs.writeFile('output.json', JSON.stringify(output))
+}
+
+main()
