@@ -1,14 +1,17 @@
-let arr = []
-for (let i = 1; i < 101; i++) {
-  if (i % 3 === 0 && i % 5 === 0) {
-    arr.push('FizzBuzz')
-  } else if (i % 3 === 0) {
-    arr.push('Fizz')
-  } else if (i % 5 === 0) {
-    arr.push('Buzz')
-  } else {
-    continue
+import * as axios from 'axios'
+
+const map = new Map()
+
+
+
+function map2Obj(map) {
+  let obj = Object.create(null)
+  for (let [k,v] in map) {
+    obj[k] = v
   }
+  return obj
 }
 
-console.log(arr)
+process.on('beforeExit', () => {
+
+})

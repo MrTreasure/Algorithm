@@ -39,3 +39,6 @@ V8直接将AST通过JIT编译为本地代码，并且在生成本地代码以后
 
 ## 事件循环
 ![事件循环](https://yjhjstz.gitbooks.io/deep-into-node/content/chapter5/5fee18eegw1ewjpoxmdf5j20k80b1win.jpg)
+
+## Event
+![Event](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Observer.svg/854px-Observer.svg.png)
