@@ -39,3 +39,12 @@ V8直接将AST通过JIT编译为本地代码，并且在生成本地代码以后
 
 ## 事件循环
 ![事件循环](https://yjhjstz.gitbooks.io/deep-into-node/content/chapter5/5fee18eegw1ewjpoxmdf5j20k80b1win.jpg)
+
+## Net网络
+五元组 **<remoteAddress, remotePort, addressType, localAddress, localPort>** 标识一个唯一网络连接
+
+主要 net 监听4个事件
+* **connection事件** server 传回来一个 socket 对象
+* **data事件** 服务器发回数据，data 是返回的事件
+* **close事件** 监听服务器关闭
+* **error事件** 监听传输中的错误事件
