@@ -1,38 +1,20 @@
-const axios = require('axios')
 const fs = require('fs-extra')
-const os = require('os')
+let arr = [{"A":103,"B":126,"C":284,"D":483}, {"A":209,"C":789}, {"A":4,"B":181,"C":677,"D":134},{"A":124,"B":165,"C":257,"D":450}, {"A":8,"B":504,"C":139,"D":345}, {"A":0,"B":759,"C":1,"D":236},
+{"A":269,"B":375,"C":249,"D":103},{"B":443,"C":488,"D":66},{"B":749,"C":248,"D":0},{"A":294,"B":417,"C":9,"D":276},{"A":167,"B":215,"C":303,"D":311},{"A":104,"B":308,"C":576,"D":8},
+{"A":787,"B":167,"C":8,"D":34},{"A":69,"B":476,"C":277,"D":174},{"A":189,"B":753,"C":8,"D":46},{"A":9,"B":234,"C":16,"D":737},{"A":156,"B":611,"C":82,"D":147},{"A":197,"B":334,"C":151,"D":314},
+{"A":1,"B":375,"C":0,"D":620},{"B":157,"D":841}]
 
-const map = new Map()
+let arrB = [[], [], [], []]
 
-const MAX = 1000
-
-for (let i = 0; i < MAX; i++) {
-  axios.get('http://localhost:2001')
-    .then(res => {
-      const data = res.data
-      if (map.has(data.pid)) {
-        let count = map.get(data.pid)
-        map.set(data.pid, ++count)
-      } else {
-        map.set(data.pid, 0)
-      }
-    })
-    .catch(err => {
-      console.log(err)
-    })
-}
-
-function map2Obj(map) {
-  let obj = Object.create(null)
-  for (let [k,v] of map) {
-    obj[k] = v
+const keys = ['A', 'B', 'C', 'D']
+for (let item of arr) {
+  for (let index in keys) {
+    if(item[keys[index]]) {
+      arrB[index].push(item[keys[index]])
+    } else {
+      arrB[index].push(0)
+    }
   }
-  return obj
 }
 
-process.on('beforeExit', async () => {
-  let obj = map2Obj(map)
-
-  await fs.appendFile('./cluster.txt', JSON.stringify(obj) + os.EOL)
-  process.exit(0)
-})
+fs.writeJSON('./cluster.json', arrB)
