@@ -48,3 +48,5 @@ V8直接将AST通过JIT编译为本地代码，并且在生成本地代码以后
 * **data事件** 服务器发回数据，data 是返回的事件
 * **close事件** 监听服务器关闭
 * **error事件** 监听传输中的错误事件
+## Event
+![Event](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Observer.svg/854px-Observer.svg.png)
