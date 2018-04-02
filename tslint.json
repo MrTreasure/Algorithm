@@ -3,5 +3,10 @@
   "globals": {
     "require": true
   },
-  "exculde": "node_modules/**"
+  "include": ["src/**/*"],
+  "exclude": ["node_modules/**"],
+  "rules": {
+    "no-trailing-whitespace": false,
+    "no-consecutive-blank-lines": false
+  }
 }
