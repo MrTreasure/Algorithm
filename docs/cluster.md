@@ -21,8 +21,10 @@ if (cluster.isMaster) {
 #子进程运行在4300
 #子进程运行在16056
 ```
-* 在主进程中 cluster 表示主进程(用于监听、发送事件), process 是本身的进程，worker 表示子进程，通过 cluster.workers 获取,该函数返回一个对象
-* 在子进程中 process 表示子进程(用于监听、发送事件)
+* 在主进程中 cluster 表示主进程(用于监听、发送事件), process 是本身的进程，worker 表示子进程，通过 cluster.workers 获取
+* 在子进程中 process 表示子进程(用于监听、发送事件),也可以通过 cluster.worker 表示当前子进程
+cluster.worker.process 等价于 process(在子进程中)
+
 
 ## 主进程子进程相互通信
 ![通信简图](../img/cluster.png)
