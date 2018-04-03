@@ -1,5 +1,7 @@
 # Cluster集群学习
 
+## 相关代码
+[src](../src/cluster/main.ts)
 ## 结论
 * 虽然平常通过设置为CPU进程数的工作进程，但是可以超过这个数，并且并不是主进程先创建
 ```javascript
