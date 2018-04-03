@@ -16,7 +16,7 @@ export class Rabbit {
    * @memberof Rabbit
    */
   constructor (url?: string) {
-    url = url || 'amqp://guest:Sunshine@localhost:5672'
+    url = url || 'amqp://guest:guest@localhost:5672'
     this.url = url
     this.connect = this.initConnect(url)
   }
