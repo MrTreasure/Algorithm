@@ -39,7 +39,7 @@ router.post('/send', async ctx => {
 // 带 exchange 的消息队列
 router.post('/exchange', async ctx => {
   const ch = await CHANNEL
-  ch.assertExchange(ex, 'fanouy', { durable: false })
+  ch.assertExchange(ex, 'fanout', { durable: false })
   try {
     ch.publish(ex, '', Buffer.from(ctx.request.body))
     ctx.body = {
