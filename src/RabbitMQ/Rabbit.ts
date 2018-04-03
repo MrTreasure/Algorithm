@@ -8,6 +8,7 @@ import * as amqp from 'amqplib'
  */
 export class Rabbit {
   private connect
+  private url: string
 
   /**
    * Creates an instance of Rabbit.
@@ -16,7 +17,8 @@ export class Rabbit {
    */
   constructor (url?: string) {
     url = url || 'amqp://guest:Sunshine@localhost:5672'
-    this.connect = amqp.connect(url)
+    this.url = url
+    this.connect = this.initConnect(url)
   }
 
   /**
@@ -25,8 +27,14 @@ export class Rabbit {
    * @memberof Rabbit
    */
   async getConn (): Promise<amqp.Connection> {
-    const conn = await (this.connect as Promise<amqp.Connection>)
-    return conn
+    try {
+      const conn = await (this.connect as Promise<amqp.Connection>)
+      return conn
+    } catch (error) {
+      console.log(error)
+      this.connect = this.initConnect(this.url)
+      return this.getConn()
+    }
   }
 
   /**
@@ -38,6 +46,10 @@ export class Rabbit {
     const conn = await this.getConn()
     const ch = await conn.createChannel()
     return ch    
+  }
+
+  private initConnect (url): any {
+    return amqp.connect(url)
   }
 }
 
