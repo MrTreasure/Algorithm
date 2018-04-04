@@ -3,3 +3,4 @@ build/
 typings/
 dist/
 src/**/*.js
+**.~vsdx

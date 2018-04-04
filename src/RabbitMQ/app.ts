@@ -15,7 +15,7 @@ const Queue = 'node'
 const ex = 'logs'
 app.use(body())
 
-// 普通的消息队列
+// 普通的消息队列  WorkQueues
 router.post('/send', async ctx => {
   const ch = await CHANNEL
   // 定义信道具有持久性
@@ -36,12 +36,13 @@ router.post('/send', async ctx => {
   log(chalk.magenta`[x] Sent${ctx.request.body.content}`)
 })
 
-// 带 exchange 的消息队列
+// 带 exchange 的消息队列 Publis&Subscribe
 router.post('/exchange', async ctx => {
   const ch = await CHANNEL
   ch.assertExchange(ex, 'fanout', { durable: false })
   try {
-    ch.publish(ex, '', Buffer.from(ctx.request.body))
+    // 默认为空的名字
+    ch.publish(ex, '', Buffer.from(ctx.request.body.content))
     ctx.body = {
       result: 'success'
     }
@@ -49,7 +50,23 @@ router.post('/exchange', async ctx => {
     console.error(chalk.red`${error.toString()}`)
     ctx.body = error
   }
+})
 
+// 带routing的exchange
+router.post('/routing', async ctx => {
+  const ch = await CHANNEL
+  // 设置 exchange 的名字 以及分发方法
+  ch.assertExchange('direct_logs', 'direct', { durable: false })
+  try {
+    // 向管道分发 info 级的方法
+    ch.publish('direct_logs', 'info', Buffer.from(ctx.request.body.content))
+    ctx.body = {
+      result: 'success'
+    }
+  } catch (error) {
+    console.error(chalk.red`${error.toString()}`)
+    ctx.body = error
+  }
 })
 
 app.use(router.routes())
