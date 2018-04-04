@@ -13,6 +13,9 @@ const CHANNEL = rabbit.getChannel()
 
 const Queue = 'node'
 const ex = 'logs'
+const key = 'anonymous.info'
+
+
 app.use(body())
 
 // 普通的消息队列  WorkQueues
@@ -67,6 +70,15 @@ router.post('/routing', async ctx => {
     console.error(chalk.red`${error.toString()}`)
     ctx.body = error
   }
+})
+
+// topic的
+router.post('/topic', async ctx => {
+  const ch = await CHANNEL
+
+  ch.assertExchange(ex, 'topic', { durable: false })
+  ch.publish(ex, key, Buffer.from(ctx.request.body.content))
+
 })
 
 app.use(router.routes())
