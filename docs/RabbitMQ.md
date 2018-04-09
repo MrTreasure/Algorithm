@@ -204,7 +204,7 @@ rabbit.getChannel().then(ch => {
   })
 })
 
-#设置prefetch的消费者
+#设置 prefetch 的消费者
 rabbit.getChannel().then(ch => {
   // 将该消费者设定到 Queue 队列中
   ch.assertQueue(Queue, { durable: true })
