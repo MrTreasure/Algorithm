@@ -3,6 +3,8 @@ import chalk from 'chalk'
 
 const log = console.log
 
+const clientList: net.Socket[] = []
+
 const server = net.createServer(socket => {
   socket.setTimeout(0)
   socket.on('end', () => {
@@ -15,6 +17,18 @@ const server = net.createServer(socket => {
     log(chalk.blue(msg.toString()))
     socket.write('I recived your message')
     socket.pipe(socket)
+  })
+})
+
+server.on('connection', client => {
+  client['name'] = client.remoteAddress + ':' + client.remotePort
+  clientList.push(client)
+  client.write('Hello' + client['name'])
+  client.on('end', () => {
+    clientList.splice(clientList.indexOf(client), 1) // 删除数组中的制定元素。
+  })
+  client.on('data', msg => {
+    log(chalk.yellow('Message from ' + msg.toString()))
   })
 })
 

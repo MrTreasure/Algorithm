@@ -16,3 +16,5 @@ client.on('end', function () {
 client.on('error', err => {
   log(chalk.red(err.toString()))
 })
+
+client.write('another message')
