@@ -39,6 +39,7 @@ V8直接将AST通过JIT编译为本地代码，并且在生成本地代码以后
 
 ## 事件循环
 ![事件循环](https://yjhjstz.gitbooks.io/deep-into-node/content/chapter5/5fee18eegw1ewjpoxmdf5j20k80b1win.jpg)
+![EventLoop](http://www.ruanyifeng.com/blogimg/asset/2014/bg2014100803.png)
 
 ## Net网络
 五元组 **<remoteAddress, remotePort, addressType, localAddress, localPort>** 标识一个唯一网络连接
@@ -50,3 +51,4 @@ V8直接将AST通过JIT编译为本地代码，并且在生成本地代码以后
 * **error事件** 监听传输中的错误事件
 ## Event
 ![Event](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Observer.svg/854px-Observer.svg.png)
+

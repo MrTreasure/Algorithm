@@ -12,3 +12,10 @@ for (let i = 0; i < arr.length; i ++) {
   tree.insert(arr[i])
 }
 tree.inOrder(tree.getRoot())
+
+interface IMessage {
+  to: string,
+  from: string,
+  content: any,
+  hash?: string
+}
