@@ -6,6 +6,7 @@
       "removeComments": true,
       "target": "esnext",
       "sourceMap": true,
+      "emitDecoratorMetadata": true,
       "experimentalDecorators": true
   },
   "include": [

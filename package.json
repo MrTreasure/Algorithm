@@ -24,6 +24,7 @@
   "devDependencies": {
     "@types/fs-extra": "^5.0.1",
     "@types/jest": "^22.1.1",
+    "@types/reflect-metadata": "^0.1.0",
     "jest": "^22.1.4",
     "ts-jest": "^22.0.2",
     "tslint": "^5.9.1",
@@ -42,6 +43,7 @@
     "fs-extra": "^5.0.0",
     "koa": "^2.5.0",
     "koa-body": "^2.5.0",
-    "koa-router": "^7.4.0"
+    "koa-router": "^7.4.0",
+    "reflect-metadata": "^0.1.12"
   }
 }
