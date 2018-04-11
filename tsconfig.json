@@ -5,7 +5,8 @@
       "allowJs": true,
       "removeComments": true,
       "target": "esnext",
-      "sourceMap": true
+      "sourceMap": true,
+      "experimentalDecorators": true
   },
   "include": [
       "./src/**/*"

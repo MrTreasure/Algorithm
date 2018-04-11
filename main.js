@@ -1,15 +1,14 @@
-const clientA
+@setCheck
+class A {
+  constructor(name) {
+    this.name = name
+  }
+}
 
-const clientB
+function setCheck(target) {
+  target.check = true
+}
 
-clientA.on('message', msg => {
-  console.log(msg)
-})
-
-clientB.on('message', msg => {
-  console.log(msg)
-})
-
-clientA.send('Hello B')
-
-clientB.send('Hello A')
+const a = new A('A')
+console.log(a.name)
+console.log(a.check)

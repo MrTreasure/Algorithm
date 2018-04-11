@@ -7,6 +7,12 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Decorators",
+      "program": "${workspaceFolder}/src/Decorators/index.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Launch Program",
       "program": "${workspaceFolder}/main.js"
     },
