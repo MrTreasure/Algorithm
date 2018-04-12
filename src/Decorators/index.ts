@@ -35,9 +35,6 @@ function modifyFun (target, name, descriptor) {
 
 Reflect.defineMetadata('CLASS_PROP', 'CLASS_A',A.prototype)
 
-Reflect.defineMetadata()
-Reflect.getMetadata()
-
 const a = new A('A')
 a.say('hello')
 

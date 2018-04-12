@@ -7,8 +7,7 @@ A.on('msg', (msg, callback) => {
   callback('Back Message:' + msg)
 })
 
-
-const promiseA = msg => {
+const sendMsg = msg => {
   return new Promise((resolve, reject) => {
     A.emit('msg', msg, (res) => {
       resolve(res)
@@ -16,7 +15,6 @@ const promiseA = msg => {
   })
 }
 
-
-promiseA('Hello Event').then(res => {
+sendMsg('Hello Event').then(res => {
   console.log(res)
 })
