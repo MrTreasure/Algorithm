@@ -2,16 +2,17 @@ import 'reflect-metadata'
 import chalk from 'chalk'
 const log = console.log
 
-@setCheck
+@modifyClass('new Prop')
 class A {
-  name: string
-  check: boolean
+
+  @modifyProp name: string
+
   constructor (name) {
     this.name = name
   }
   
-  @modifyFun
-  say (word) {
+  @modifyMethod
+  say (@modifyParam word) {
     log('default', word)
     return 1
   }
@@ -19,11 +20,18 @@ class A {
 
 
 
-function setCheck (target) {
-  target.prototype.check = true
+function modifyClass (name) {
+  return (target) => {
+    target.prototype.extra = name
+  }
+}
+ 
+function modifyProp (target, propertyKey) {
+  console.log(target)
+  console.log(propertyKey)
 }
 
-function modifyFun (target, name, descriptor) {
+function modifyMethod (target, propertyKey, descriptor) {
   const fun = descriptor.value
   descriptor.value = function () {
     const arr = [...arguments]
@@ -33,9 +41,14 @@ function modifyFun (target, name, descriptor) {
   // return descriptor
 }
 
-Reflect.defineMetadata('CLASS_PROP', 'CLASS_A',A.prototype)
+function modifyParam (target, propertyKey, index) {
+  console.log(target)
+  console.log(propertyKey)
+  console.log(index)
+}
 
-const a = new A('A')
-a.say('hello')
+const a = new A('hello')
+console.log(a['extra'])
 
-console.log(Reflect.getMetadata('CLASS_PROP', A.prototype))
+// Reflect.defineMetadata('CLASS_PROP', 'CLASS_A',A.prototype)
+// console.log(Reflect.getMetadata('CLASS_PROP', A.prototype))
