@@ -1,3 +1,79 @@
+## Node项目目录结构最佳实践
+* 按照功能组织目录结构而不是规则
+```bash
+// DON'T
+.
+├── controllers
+|   ├── product.js
+|   └── user.js
+├── models
+|   ├── product.js
+|   └── user.js
+├── views
+|   ├── product.hbs
+|   └── user.hbs
+
+// DO
+.
+├── product
+|   ├── index.js
+|   ├── product.js
+|   └── product.hbs
+├── user
+|   ├── index.js
+|   ├── user.js
+|   └── user.hbs
+```
+* 不要在```index.js```文件中写入业务逻辑
+```javascript
+// product/index.js
+var product = require('./product')
+
+module.exports = {
+  create: product.create
+}
+```
+* 测试文件应该放在它们的实现旁边
+```bash
+.
+├── test
+|   └── setup.spec.js
+├── product
+|   ├── index.js
+|   ├── product.js
+|   ├── product.spec.js
+|   └── product.hbs
+├── user
+|   ├── index.js
+|   ├── user.js
+|   ├── user.spec.js
+|   └── user.hbs
+```
+* 使用 ```config```目录
+```bash
+.
+├── config
+|   ├── index.js
+|   └── server.js
+├── product
+|   ├── index.js
+|   ├── product.js
+|   ├── product.spec.js
+|   └── product.hbs
+```
+* 将你很长的 npm 脚本代码写入一个 脚本目录
+```bash
+.
+├── scripts
+|   ├── syncDb.sh
+|   └── provision.sh
+├── product
+|   ├── index.js
+|   ├── product.js
+|   ├── product.spec.js
+|   └── product.hbs
+```
+
 ```javascript
 # 利用 querysString 切割文本
 const weirdoString = `name:Sophie;shape:fox;condition:new`;
