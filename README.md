@@ -22,4 +22,7 @@
 * [cluster](./visio/cluster.vsdx)
 * [RabbitMQ](./RabbitMQ.vsdx)
 
+## 疑难问题
+* node集群环境下的ws协议如何保证一致性
+
 

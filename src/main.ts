@@ -19,3 +19,4 @@ interface IMessage {
   content: any,
   hash?: string
 }
+
