@@ -14,11 +14,6 @@ declare global {
     var a: number
     let b: string
   }
-
-  class Liu {
-    getMethod():void
-  }
-  var a: Liu
 }
 
 
