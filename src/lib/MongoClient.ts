@@ -48,7 +48,7 @@ export class MongoClient {
    * @param {object} options 
    * @returns {Promise<IInsertOneResult>}
    */
-  async insertMany (collectionName: string, docs: object[], options = {}): Promise<IInsertOneResult> {
+  async insertMany (collectionName: string, docs: object[], options = {}): Promise<any> {
     const collection = await this.getCollenction(collectionName)
     return collection.insertMany(docs, options)
   }
@@ -178,20 +178,8 @@ export class MongoClient {
   }
 
   private async getDatabase (): Promise<Db> {
-    let count = 0
-    try {
-      const client = await this.clientPromise
-      return client.db(this.dbName)
-    } catch (e) {
-      console.error('mongo error',e)
-      if (count < 10) {
-        this.getDatabase()
-        count++
-      } else {
-        process.exit(27017)
-      }
-    }
-    
+    const client = await this.clientPromise
+    return client.db(this.dbName)
   }
 
   /**

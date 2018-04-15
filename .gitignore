@@ -4,3 +4,4 @@ typings/
 dist/
 src/**/*.js
 **.~vsdx
+**.pdf
