@@ -3,4 +3,4 @@ import * as mongodb from 'mongodb'
 
 const clientPromise = mongodb.MongoClient.connect('mongodb://localhost:27017')
 
-export default new MongoClient(clientPromise, 'GTX1070')
+export default new MongoClient(clientPromise, 'docker')

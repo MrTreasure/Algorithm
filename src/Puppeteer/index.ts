@@ -10,12 +10,13 @@ const log = console.log
 interface IWriteData {
   link: string
   picture: string
-  price: string
+  price: string | number
   title: string
 }
 
 async function main () {
   const browser = await puppeteer.launch()
+  log(chalk.green('服务正常启动'))
   try {
     const page = await browser.newPage()
     page.on('console', msg => {
@@ -26,7 +27,7 @@ async function main () {
       }
     })
 
-    await page.goto('https://s.taobao.com/search?q=gtx1070&imgfile=&js=1&stats_click=search_radio_all%3A1&initiative_id=staobaoz_20180415&ie=utf8')
+    await page.goto('https://s.taobao.com/search?q=gtx1070&imgfile=&js=1&stats_click=search_radio_all%3A1&initiative_id=staobaoz_20180415&ie=utf8&bcoffset=6&ntoffset=6&p4ppushleft=1%2C48&s=0')
     log(chalk.green('页面加载完毕'))
 
     await page.waitFor(5000)
@@ -52,28 +53,29 @@ async function main () {
         writeData.link = link.href
 
         let price = item.querySelector('strong')
-        writeData.price = price.innerText
+        writeData.price = ~~price.innerText
         
 
-        let titleList = Array.from(item.querySelectorAll('.J_ClickStat')[1].querySelectorAll('span'))
+        let title: HTMLAnchorElement = item.querySelector('.title>a')
 
-        writeData.title = titleList.map(item => item.innerHTML).toString().trim()
+        writeData.title = title.innerText
 
         writeDataList.push(writeData)
       }
       return writeDataList
     })
 
-    log(list)
+    const result = await mongo.insertMany('GTX1070', list)
+    log(chalk.green('写入数据库完毕'))
 
     await browser.close()
     log(chalk.green('服务正常结束'))
   } catch (error) {
     console.log(error)
     log(chalk.red('服务意外终止'))
-    // await browser.close()
+    await browser.close()
   } finally {
-    // process.exit(0)
+    process.exit(0)
   }
 }
 

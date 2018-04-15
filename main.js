@@ -1,40 +1,22 @@
-// const EventEmitter = require('events').EventEmitter
 
-// const A = new EventEmitter()
+const PromiseList = []
 
-// A.on('msg', (msg, callback) => {
-//   console.log(msg)
-//   callback('Back Message:' + msg)
-// })
-
-
-// const promiseA = msg => {
-//   return new Promise((resolve, reject) => {
-//     A.emit('msg', msg, (res) => {
-//       resolve(res)
-//     })
-//   })
-// }
-
-
-// promiseA('Hello Event').then(res => {
-//   console.log(res)
-// })
-
-class Base {
-
+const getPromise = (msg) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log(msg)
+      resolve()
+    }, msg * 1000)
+  })
 }
 
-class A extends Base {
-  constructor() {
-    this.name = name
+for (let i = 0; i < 10; i++) {
+  PromiseList.push(getPromise(i))
+}
+
+async function main() {
+  for (let i of PromiseList) {
+    await i
   }
-  prop(){}
 }
-
-class B extends A {
-
-}
-
-console.log(A)
-console.log(A.prototype)
+main()
