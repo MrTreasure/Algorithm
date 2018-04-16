@@ -10,7 +10,7 @@ const log = console.log
 
 const server = http.createServer((req, res) => {
   console.dir(req.rawHeaders)
-  const img = fs.createReadStream(path.resolve(__dirname, '../../Treasure.png'))
+  const img = fs.createReadStream(path.resolve(__dirname, '../../views/index.html'))
   img.pipe(res)
 })
 

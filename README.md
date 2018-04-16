@@ -13,6 +13,7 @@
 * [Node下的cluster集群](./docs/cluster.md)
 * [TS从装饰器到注解到元编程](./docs/TS从装饰器到注解到元编程.md)
 * [Node的Net模块学习小结](./docs/Net.md)
+* [使用Puppeteer完成一次复杂的爬虫](./docs/Puppeteer.md)
 
 ## 算法
 * [消息队列](./src/RabbitMQ)
