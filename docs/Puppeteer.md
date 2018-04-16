@@ -175,7 +175,7 @@ async function main() {
 }
 ```
 
-##思考
+## 思考
 1. 为什么使用Typescript？
 
     因为Typescript就是好用啊，我也背不住Puppeteer的全部API，也不想每一个都查，所以使用TS就能智能提醒了,也能避免因为拼写导致的低级错误。基本上用了TS以后，敲代码都能一遍过
