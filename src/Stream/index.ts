@@ -1,5 +1,7 @@
 import { Readable, Writable, Duplex, Transform } from 'stream'
 import { StringDecoder } from 'string_decoder'
+import * as fs from 'fs-extra'
+import * as dns from 'dns'
 
 class StringWritable extends Writable {
   public data: any = ''
@@ -26,12 +28,33 @@ class StringWritable extends Writable {
     callback()
   }
 }
-const euro = [[0xE2, 0x82], [0xAC]].map(Buffer.from)
-const w = new StringWritable()
 
-w.write('currency: ')
-w.write(euro[0])
-w.end(euro[1])
+class Counter extends Readable {
+  private max = 100
+  private index = 1
 
+  constructor (opt?) {
+    super(opt)
+  }
 
-console.log(w.data) // currency: €
+  _read () {
+    const i = this.index++
+    if (i > this.max) {
+      this.push(null)
+    } else {
+      const str = i + ''
+      const buf = Buffer.from(str)
+      this.push(buf)
+    }
+  }
+}
+
+dns.lookup('tencent.cn', (err, address, family) => {
+  if (err) console.error(err)
+  console.log('IP 地址: %j 地址族: IPv%s', address, family)
+})
+
+dns.resolve('tencent.com', (err, address) => {
+  if (err) console.error(err)
+  console.log('IP 地址: %j', address)
+})
