@@ -21,6 +21,7 @@ class StringStream extends Readable {
 class StringTransform extends Transform {
   _transform (chunk, encoding, cb) {
     console.log(chunk)
+    if (!chunk) cb(null)
     cb(chunk)
   }
 }

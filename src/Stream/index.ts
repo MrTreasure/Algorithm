@@ -3,58 +3,21 @@ import { StringDecoder } from 'string_decoder'
 import * as fs from 'fs-extra'
 import * as dns from 'dns'
 
-class StringWritable extends Writable {
-  public data: any = ''
+const rs = new Readable()
 
-  private state: boolean
-  private _decoder = new StringDecoder('utf8')
-  private length = 0
+let c = 97
 
-
-  constructor (options?) {
-    super(options)
-  }
-
-  _write (chunk, encoding, callback) {
-    if (encoding === 'buffer') {
-      chunk = this._decoder.write(chunk)
-    }
-    this.data += chunk
-    callback()
-  }
-
-  _final (callback) {
-    this.data += this._decoder.end()
-    callback()
-  }
+rs._read = function () {
+  rs.push(String.fromCharCode(c++))
+  if (c > 'z'.charCodeAt(0)) rs.push(null)
 }
 
-class Counter extends Readable {
-  private max = 100
-  private index = 1
+rs.pipe(process.stdout)
+const ws = new Writable()
 
-  constructor (opt?) {
-    super(opt)
-  }
-
-  _read () {
-    const i = this.index++
-    if (i > this.max) {
-      this.push(null)
-    } else {
-      const str = i + ''
-      const buf = Buffer.from(str)
-      this.push(buf)
-    }
-  }
+ws._write = function (chunk, encoding, next) {
+  console.dir(chunk)
+  next()
 }
 
-dns.lookup('tencent.cn', (err, address, family) => {
-  if (err) console.error(err)
-  console.log('IP 地址: %j 地址族: IPv%s', address, family)
-})
-
-dns.resolve('tencent.com', (err, address) => {
-  if (err) console.error(err)
-  console.log('IP 地址: %j', address)
-})
+process.stdin.pipe(ws)
