@@ -1,6 +1,8 @@
 
 # 算法学习 以及 各种文档
 
+![Ecmascript](./img/Javascript.gif)
+
 ## 文档
 * [API Gateway](./docs/APIGateway.md)
 * [NodeJS技巧](./docs/NodeJS技巧.md)
