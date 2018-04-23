@@ -75,11 +75,32 @@ while (eventLoop.waitForTask()) {
 ## 思考
 以上就是对整个event loop的翻译与解释，文章解释比较简洁明细，但是相信大部分同学可能还是不太明白，那么我们换个思路，如果面试官问什么是event loop，面试官是想知道些什么？我应该怎么回答？
 
-event loop顾名思义就是事件循环，为什么要有事件循环呢？因为V8是单线程的，即同一时间只能干一件事情，但是呢文件的读取，网络的IO处理是很缓慢的，并且是不确定的,如果同步等待它们响应，那么用户就起飞了。于是我们就把这个事件加入到一个 事件队列里(macrotask),等到事件完成时，event loop再执行一个事件队列。
+event loop顾名思义就是事件循环，为什么要有事件循环呢？因为V8是单线程的，即同一时间只能干一件事情，但是呢文件的读取，网络的IO处理是很缓慢的，并且是不确定的,如果同步等待它们响应，那么用户就起飞了。于是我们就把这个事件加入到一个 事件队列里(Task),等到事件完成时，event loop再执行一个事件队列。
 
-值得注意的是，每一种异步事件加入的 事件队列是不一样的。*唯一的两个限制是同一个任务源中的事件必须属于同一个队列，并且必须在每个队列中按插入顺序处理任务。* 也就是说由系统提供的执行macrotask的方法，如 setTimeout setInterval setimmediate 会在一个macrotask，网络IO会在一个macrotask，用户的事件会在一个macrotask。每一次event loop会选择其中的一个事件队列执行，但是究竟选择哪一个是不确定的（所以node说不保证task queue的执行顺序，但是一个taskqueue内部的执行顺序是可以保证的）
+值得注意的是，每一种异步事件加入的 事件队列是不一样的。*唯一的两个限制是同一个任务源中的事件必须属于同一个队列，并且必须在每个队列中按插入顺序处理任务。* 也就是说由系统提供的执行Task的方法，如 setTimeout setInterval setimmediate 会在一个Task，网络IO会在一个Task，用户的事件会在一个Task。event Loop会参照以下顺序执行
 
-除了macrotask还有一个microtask，这一个概念是ES6提出Promise以后出现的。这个microtask queue只有一个。并且会在且一定会在每一个macrotask后执行，且执行是按顺序的。加入到microtask 的事件类型有Promise.resolve().then(), process.nextTick() 值得注意的是，event loop一定会在执行完micrtask以后才会寻找新的 可执行的macrotask队列。而microtask事件内部又可以产生新的microtask事件比如
+1. update_time
+在事件循环的开头，这一步的作用实际上是为了获取一下系统时间，以保证之后的timer有个计时的标准。这个动作会在每次事件循环的时候都发生，确保了之后timer触发的准确性。（其实也不太准确....)
+
+2. timers
+事件循环跑到这个阶段的时候，要检查是否有到期的timer,其实也就是setTimeout和setInterval这种类型的timer，到期了，就会执行他们的回调。
+
+3. I/O callbacks
+处理异步事件的回调，比如网络I/O，比如文件读取I/O。当这些I/O动作都结束的时候，在这个阶段会触发它们的回调。我特别指出了结束这个限定语。
+
+4. idle, prepare
+这个阶段内部做一些动作，与理解事件循环没啥关系
+
+5. I/O poll阶段
+这个阶段相当有意思，也是事件循环设计的一个有趣的点。这个阶段是选择运行的。选择运行的意思就是不一定会运行。在这里，我先卖一个关子，后问详细深入讨论。
+
+6. check
+执行setImmediate操作
+
+7. close callbacks
+关闭I/O的动作，比如文件描述符的关闭，链接断开，等等等
+
+除了Task还有一个microtask，这一个概念是ES6提出Promise以后出现的。这个microtask queue只有一个。并且会在且一定会在每一个Task后执行，且执行是按顺序的。加入到microtask 的事件类型有Promise.resolve().then(), process.nextTick() 值得注意的是，event loop一定会在执行完micrtask以后才会寻找新的 可执行的Task队列。而microtask事件内部又可以产生新的microtask事件比如
 ```javascript
 (function microtask() {
   process.nextTick(() => microtask())
@@ -87,9 +108,9 @@ event loop顾名思义就是事件循环，为什么要有事件循环呢？因�
 ```
 这样就会不断的在microtask queue添加事件，导致整个eventloop堵塞
 
-最后就是一个渲染的事件队列，这个队列只出现在浏览器上，并且执行环境会根据情况决定执行与否(可能执行很多macrotask queue也不执行渲染队列)。它如果执行则一定会在microtask后执行，通过```requestAnimationFrame(handle)``` 方法,能够保证中间的代码一定能在下一次执行渲染函数前执行
+最后就是一个渲染的事件队列，这个队列只出现在浏览器上，并且执行环境会根据情况决定执行与否(可能执行很多Task queue也不执行渲染队列)。它如果执行则一定会在microtask后执行，通过```requestAnimationFrame(handle)``` 方法,能够保证中间的代码一定能在下一次执行渲染函数前执行
 
-### 补充常见的产生microtask和macrotask事件的方法
+### 补充常见的产生microtask和Task事件的方法
 microtasks:
 
 * process.nextTick
@@ -97,7 +118,7 @@ microtasks:
 * Object.observe
 * MutationObserver
 
-macrotasks:
+Tasks:
 * setTimeout
 * setInterval
 * setImmediate
