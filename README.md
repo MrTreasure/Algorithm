@@ -15,6 +15,7 @@
 * [TS从装饰器到注解到元编程](./docs/TS从装饰器到注解到元编程.md)
 * [Node的Net模块学习小结](./docs/Net.md)
 * [使用Puppeteer完成一次复杂的爬虫](./docs/Puppeteer.md)
+* [VSC快捷命令](./docs/VSC快捷命令.md)
 
 ## 算法
 * [消息队列](./src/RabbitMQ)

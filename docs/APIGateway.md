@@ -14,3 +14,7 @@
 4. 转换协议
 ![Protocol transformation](https://blog-assets.risingstack.com/2017/07/api-gateway-protocol.png)
 5. 流量限制以及缓存
+
+## 吹逼角度
+微服务，架构演化，组件协同，熔断，恢复
+从数据供应链的角度讲讲
