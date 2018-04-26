@@ -3,10 +3,10 @@ import chalk from 'chalk'
 
 const log = console.log
 
-const IPC = '\\\\?\\pipe\\E:\\Node\\Algorithm\\dist\\Net'
+const IPC = '\\\\?\\pipe\\E:\\End\\Algorithm\\dist\\Net'
 const DEBUG = '\\\\?\\pipe\\e:\\Node\\Algorithm'
 
-const client = net.connect(DEBUG, () => {
+const client = net.connect(IPC, () => {
   log(chalk.green('服务已连接——' + '当前进程ID为：' + process.pid))
   client.write(JSON.stringify({ id: process.pid, type: MSG_TYPE.INIT, data: {} }))
 

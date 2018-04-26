@@ -22,6 +22,7 @@ server.on('connection', socket => {
   //   console.log(this)
   //   log(chalk.green(clientList.map(item => item.id).toString()))
   // })
+  console.log(socket)
   socket.on('data', function (msg) {
     let message = JSON.parse(msg.toString())
     handleClientMsg(message, this)
