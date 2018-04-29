@@ -4,7 +4,12 @@
     "require": true
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules/**"],
+  "linterOptions": {
+    "exclude": [
+      "config/**/*.js",
+      "node_modules/**/*.ts"
+    ]
+  },
   "rules": {
     "no-trailing-whitespace": false,
     "no-consecutive-blank-lines": false
