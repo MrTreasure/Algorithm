@@ -22,6 +22,9 @@
 * [消息队列](./src/RabbitMQ)
 * [栈结构](./src/Stack)
 * [二次树](./src/Tree)
+* [选择排序](./src/sort/select.ts)
+* [快速排序](./src/sort/quick.ts)
+* [冒泡排序](./src/sort/bubble.ts)
 
 ## 思维图
 * [cluster](./visio/cluster.vsdx)
