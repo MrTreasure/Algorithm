@@ -31,7 +31,12 @@
 * [cluster](./visio/cluster.vsdx)
 * [RabbitMQ](./RabbitMQ.vsdx)
 
-## 疑难问题
-* node集群环境下的ws协议如何保证一致性
+## 代码片段
+* [统一ajax工具](./gist/ajax.js)
+* [Cookies操作相关](./gist/auth.js)
+* [Vue右键菜单](./gist/VueContextMenu.vue)
+* [Vue i18n工具](./gist/lang.js)
+* [Vue 入口main文件配置](./gist/main.js)
+* [Vue 统一表格注入](./gist/table.js)
 
 
