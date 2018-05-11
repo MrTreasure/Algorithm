@@ -1,22 +1,12 @@
-
-const PromiseList = []
-
-const getPromise = (msg) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      console.log(msg)
-      resolve()
-    }, msg * 1000)
-  })
+const obj = {
+  a: 10
 }
 
-for (let i = 0; i < 10; i++) {
-  PromiseList.push(getPromise(i))
+const fun = () => {
+  console.log(this.a)
 }
 
-async function main() {
-  for (let i of PromiseList) {
-    await i
-  }
-}
-main()
+fun.call(obj)
+
+fun()
+
