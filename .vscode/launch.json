@@ -4,11 +4,12 @@
   // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
+
 {
   "type": "node",
   "request": "launch",
   "name": "Quick",
-  "program": "${workspaceFolder}/dist/sort/quick.js"
+  "program": "${workspaceFolder}/dist/sort/insert.js"
 },
     {
       "type": "node",

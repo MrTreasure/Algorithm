@@ -26,6 +26,7 @@
 * [选择排序](./src/sort/select.ts)
 * [快速排序](./src/sort/quick.ts)
 * [冒泡排序](./src/sort/bubble.ts)
+* [插入排序](./src/sort/insert.ts)
 
 ## 思维图
 * [cluster](./visio/cluster.vsdx)
