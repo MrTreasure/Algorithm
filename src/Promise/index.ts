@@ -31,12 +31,87 @@ class MyPromise {
   }
 
   public then (onFulfilled, onReject?) {
-    this.onResolveCallbacks.push(onFulfilled)
-    if (onReject) {
-      this.onRejectCallbacks.push(onReject)
-      return
+
+    function resolvePromise (promise, res, resolve, reject) {
+      if (promise === res) {
+        return reject(new TypeError('循环引用'))
+      }
+      let then
+      let called
+
+      if (res !== null && ((typeof res === 'object' || typeof res === 'function'))) {
+        try {
+          then = res.then
+          if (typeof then === 'function') {
+            then.call(res, function (res2) {
+              if (called) return
+              called = true
+              resolvePromise(promise, res2, resolve, reject)
+            }, function (err) {
+              if (called) return
+              called = true
+              reject(err)
+            })
+          } else {
+            resolve(res)
+          }
+        } catch (error) {
+          if (called) return
+          called = true
+          reject(error)
+        }
+      } else {
+        resolve(res)
+      }
     }
-    return this
+
+    let promise2
+    const self = this
+    if (this.status === STATUS.FULFILLED) {
+      promise2 = new MyPromise((resovle, reject) => {
+        setImmediate(() => {
+          try {
+            let res = onFulfilled(self.value)
+            resolvePromise(promise2, res, resovle, reject)
+          } catch (error) {
+            reject(error)
+          }
+        })
+      })
+    }
+    if (this.status === STATUS.REJECTED) {
+      promise2 = new MyPromise((resolve, reject) => {
+        setImmediate(() => {
+          try {
+            let res = onReject(self.reason)
+            resolvePromise(promise2, res, resolve, reject)
+          } catch (error) {
+            reject(error)
+          }
+        })
+      })
+    }
+    if (this.status === STATUS.PENDING) {
+      promise2 = new MyPromise((reslove, reject) => {
+        self.onResolveCallbacks.push(value => {
+          try {
+            let res = onFulfilled(value)
+            resolvePromise(promise2, res, reslove, reject)
+          } catch (error) {
+            reject(error)
+          }
+        })
+        self.onRejectCallbacks.push(reason => {
+          try {
+            let res = onReject(reason)
+            resolvePromise(promise2, res, reslove, reject)
+          } catch (error) {
+            reject(error)
+          }
+        })
+      })
+    }
+    return promise2
   }
 
   public catch (onReject) {
@@ -64,8 +139,12 @@ let p = new MyPromise((resolve, reject) => {
 
 
 p.then((res) => {
-  console.log(res)
-  return 4
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log(res)
+      resolve(4)
+    }, 1000)
+  })
 }).then((res) => {
   console.log(res)
 })

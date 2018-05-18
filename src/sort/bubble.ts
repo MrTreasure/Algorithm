@@ -14,5 +14,5 @@ function bubble (arr: number[]): number[] {
   return arr
 }
 
-const arr = produceNums(10)
+const arr = produceNums(10, 20)
 console.log(bubble(arr))
