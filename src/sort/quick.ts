@@ -18,5 +18,6 @@ function quick (arr: any[]): any[] {
   }
 }
 
-const arr = produceNums(20)
+const arr = produceNums(20, 20)
 console.log(quick(arr))
+
