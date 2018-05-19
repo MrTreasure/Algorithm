@@ -197,7 +197,7 @@ public then (onFulfilled: Function, onReject?: Function) {
 
 这篇文章只是简单的介绍了Promise背后执行的原理，还有Promise.all Promise.race方法没有实现，不过已经不重要了，我们只需要记得Promise是一个发布订阅模式就OK，generator和 async await的方法也没有实现。不过基于此，可以大胆的猜测。通过await执行的Promise，是将原本resolve我们注册的函数改为了执行await方法中的函数，再把值取出来给我们调用。大抵应该是这个原理。实现上需要写一个generator runtime这也超过大部分人的能力。因此能够用好async await就好了。
 
-本文的源代码在 [Github](../src/Promise.ts) 欢迎star
+本文的源代码在 [Github](../src/Promise/index.ts) 欢迎star
 
 本文参考自文章 [确认过眼神，你就是我的Promise~~](https://juejin.im/post/5af8ee2bf265da0b8f62a757#heading-10)
 
