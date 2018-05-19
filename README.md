@@ -3,6 +3,9 @@
 
 ![Ecmascript](./img/Javascript.gif)
 
+## 个人简历
+* [Resume](./docs/resume.md)
+
 ## 文档
 * [API Gateway](./docs/APIGateway.md)
 * [NodeJS技巧](./docs/NodeJS技巧.md)

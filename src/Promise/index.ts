@@ -4,11 +4,15 @@ class MyPromise {
   private reason: any
   private onResolveCallbacks: Function[] = []
   private onRejectCallbacks: Function[] = []
+  private executor: Function
+  private resolve: Function
+  private reject: Function
 
   constructor (executor: IExecutor) {
     let p = this
     function resolve (value: any) {
       setImmediate(() => {
+        console.log(p)
         if (p.status === STATUS.PENDING) {
           p.status = STATUS.FULFILLED
           p.value = value
@@ -27,44 +31,13 @@ class MyPromise {
       })
     }
 
+    // this.executor = executor
+    // this.resolve = resolve
+    // this.reject = reject
     executor(resolve, reject)
   }
 
-  public then (onFulfilled, onReject?) {
-
-    function resolvePromise (promise, res, resolve, reject) {
-      if (promise === res) {
-        return reject(new TypeError('循环引用'))
-      }
-      let then
-      let called
-
-      if (res !== null && ((typeof res === 'object' || typeof res === 'function'))) {
-        try {
-          then = res.then
-          if (typeof then === 'function') {
-            then.call(res, function (res2) {
-              if (called) return
-              called = true
-              resolvePromise(promise, res2, resolve, reject)
-            }, function (err) {
-              if (called) return
-              called = true
-              reject(err)
-            })
-          } else {
-            resolve(res)
-          }
-        } catch (error) {
-          if (called) return
-          called = true
-          reject(error)
-        }
-      } else {
-        resolve(res)
-      }
-    }
-
+  public then (onFulfilled: Function, onReject?: Function) {
     let promise2
     const self = this
     if (this.status === STATUS.FULFILLED) {
@@ -111,6 +84,40 @@ class MyPromise {
         })
       })
     }
+
+    function resolvePromise (promise, res, resolve, reject) {
+      if (promise === res) {
+        return reject(new TypeError('循环引用'))
+      }
+      let then
+      let called
+
+      if (res !== null && ((typeof res === 'object' || typeof res === 'function'))) {
+        try {
+          then = res.then
+          if (typeof then === 'function') {
+            then.call(res, function (res2) {
+              if (called) return
+              called = true
+              resolvePromise(promise, res2, resolve, reject)
+            }, function (err) {
+              if (called) return
+              called = true
+              reject(err)
+            })
+          } else {
+            resolve(res)
+          }
+        } catch (error) {
+          if (called) return
+          called = true
+          reject(error)
+        }
+      } else {
+        resolve(res)
+      }
+    }
+    
     return promise2
   }
 
