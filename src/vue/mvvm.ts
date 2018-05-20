@@ -45,7 +45,7 @@ class Compile {
     }
   }
 
-  private compile (fragment: Element) {
+  private compile (fragment: any) {
     let childNodes = fragment.childNodes
     Array.from(childNodes).forEach((node: Element) => {
       if (this.isElementNode(node)) {
@@ -67,8 +67,22 @@ class Compile {
   }
 }
 
-class MVVM {
+interface IOptions {
+  $el: HTMLElement
+  $data: any
+}
 
+class MVVM {
+  private $el: HTMLElement
+  private $data: any
+  
+  constructor (options: IOptions) {
+    this.$el = options.$el
+    this.$data = options.$data
+    if (this.$el) {
+      const _ = new Compile(this.$el, this)
+    }
+  }
 }
 
 class CompileUtil {
