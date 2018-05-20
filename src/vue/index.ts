@@ -1,26 +1,41 @@
-function defineReactive (obj: object, key: string, val: any) {
-  observe(val)
-  Object.defineProperty(obj, key, {
-    enumerable: true,
-    configurable: true,
-    get () {
-      if (Dep.target) {
-        dep.addSub(Dep.target)
+class Observer {
+  private data: object
+  
+  constructor (data) {
+    this.data = data
+  }
+
+  private walk (data) {
+    const self = this
+    Object.keys(data).forEach(key => {
+      self.defineReactive(data, key, data[key])
+    })
+  }
+
+  private defineReactive (obj: object, key: string, val: any) {
+    const dep = new Dep()
+    const childObj = observe(val)
+    Object.defineProperty(obj, key, {
+      enumerable: true,
+      configurable: true,
+      get () {
+        if (Dep.target) {
+          dep.addSub(Dep.target)
+        }
+        return val
+      },
+      set (newVal) {
+        val = newVal
+        console.log(`属性${key}已经被监听，值为：${val.toString()}`)
+        dep.notify()
       }
-      return val
-    },
-    set (newVal) {
-      val = newVal
-      console.log(`属性${key}已经被监听，值为：${val.toString()}`)
-      dep.notify()
-    }
-  })
+    })
+  }
 }
 
 function observe (obj: object) {
-  Object.keys(obj).forEach(key => {
-    defineReactive(obj, key, obj[key])
-  })
+  if (!obj || typeof obj !== 'object') return
+  return new Observer(obj)
 }
 
 class Dep {
@@ -42,15 +57,18 @@ class Dep {
 
 class Watcher {
   private cb: Function
-  private vm: any
-  private exp: any
+  private vm: MyVue
+  private exp: string
   private value: any
 
-  constructor () {
+  constructor (vm, exp, cb) {
+    this.vm = vm
+    this.exp = exp
+    this.cb = cb
     this.value = this.get()
   }
 
-  private run () {
+  private update () {
     let value = this.vm.data[this.exp]
     let oldVal = this.value
     if (value !== oldVal) {
@@ -67,5 +85,33 @@ class Watcher {
   }
 }
 
+class MyVue {
+  public data: object
+  private el: HTMLElement
+  private exp: string
+
+  constructor (data, el, exp) {
+    this.data = data
+    this.el = el
+    this.exp = exp
+    this.el.innerHTML = this.data[exp]
+    const _ = new Watcher(this, exp, value => {
+      this.el.innerHTML = value
+    })
+  }
+}
+
 const dep = new Dep()
-const watcher = new Watcher()
+
+// 代码运行开始
+const app = document.querySelector('#app')
+
+const data = {
+  name: 'Treasure'
+}
+const vm = new MyVue(data, app, 'name')
+
+window.setTimeout(() => {
+  console.log('change')
+  data.name = 'Sunshine'
+}, 2000)
