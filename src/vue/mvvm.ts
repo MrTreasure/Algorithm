@@ -57,37 +57,18 @@ class Compile {
     })
   }
 
-  private node2fragment (el): DocumentFragment {
+  private node2fragment (el: HTMLElement): DocumentFragment {
     const fragment = document.createDocumentFragment()
-    let firstChild
-    while (firstChild === el.firstChild) {
-      fragment.appendChild(firstChild)
-    }
+    Array.from(el.childNodes).forEach(child => {
+      fragment.appendChild(child)
+    })
     return fragment
-  }
-}
-
-interface IOptions {
-  $el: HTMLElement
-  $data: any
-}
-
-class MVVM {
-  private $el: HTMLElement
-  private $data: any
-  
-  constructor (options: IOptions) {
-    this.$el = options.$el
-    this.$data = options.$data
-    if (this.$el) {
-      const _ = new Compile(this.$el, this)
-    }
   }
 }
 
 class CompileUtil {
   static updater = {
-    textUpdate (node: Element, value: any) {
+    textUpdater (node: Element, value: any) {
       node.textContent = value
     },
     modelUpdater (node: Element, value) {
@@ -97,12 +78,183 @@ class CompileUtil {
 
   static text (node: Element, vm: MVVM, expr: any) {
     let updateFn = this.updater['textUpdater']
-    updateFn && updateFn(node, expr)
+    let value = this.getTextVal(vm, expr)
+    expr.replace(/\{\{([^}]+)\}\}/g, (...args) => {
+      const _ = new Watcher(vm, args[1], newValue => {
+        updateFn && updateFn(node, this.getTextVal(vm, expr))
+      })
+    })
+    updateFn && updateFn(node, value)
+  }
+
+  static setVal (vm: MVVM, expr, value) {
+    expr = expr.split('.')
+    return expr.reduce((prev, next, currentIndex) => {
+      if (currentIndex === expr.length - 1) {
+        return prev[next] = value
+      }
+      return prev[next]
+    }, vm.$data)
   }
 
   static model (node: Element, vm: MVVM, expr: any) {
     let updateFn = this.updater['modelUpdater']
-    updateFn && updateFn(node, expr)
+    const _ = new Watcher(vm, expr, newValue => {
+      updateFn && updateFn(node, newValue)
+    })
+    node.addEventListener('input', (e: any) => {
+      let newValue = e.target.value
+      this.setVal(vm, expr, newValue)
+    })
+    updateFn && updateFn(node, this.getVal(vm, expr))
+  }
+
+  static getTextVal (vm, expr) {
+    return expr.replace(/\{\{([^}]+)\}\}/g, (...args) => {
+      return this.getVal(vm, args[1])
+    })
+  }
+
+  static getVal (vm, expr) {
+    expr = expr.split('.')
+    return expr.reduce((prev, next) => {
+      return prev[next]
+    }, vm.$data)
   }
 }
 
+class Observer {
+  constructor (data) {
+    this.observe(data)
+  }
+
+  private observe (data) {
+    if (!data || typeof data !== 'object') {
+      return
+    }
+    Object.keys(data).forEach(key => {
+      this.defineReactive(data, key, data[key])
+      this.observe(data[key])
+    })
+  }
+
+  private defineReactive (obj, key, value) {
+    const self = this
+    const dep = new Dep()
+    Object.defineProperty(obj, key, {
+      enumerable: true,
+      configurable: true,
+      get () {
+        Dep.target && dep.addSub(Dep.target)
+        return value
+      },
+      set (newValue) {
+        if (newValue !== value) {
+          self.observe(newValue)
+          value = newValue
+          dep.notify()
+        }
+      }
+    })
+  }
+}
+
+class Watcher {
+  private vm: MVVM
+  private expr: string
+  private cb: Function
+  private value: any
+
+  constructor (vm: MVVM, expr: string, cb: Function) {
+    this.vm = vm
+    this.expr = expr
+    this.cb = cb
+    this.value = this.get()
+  }
+
+  public update () {
+    let newValue = this.getVal(this.vm, this.expr)
+    let oldValue = this.value
+    if (newValue !== oldValue) {
+      this.cb(newValue)
+    }
+  }
+
+  private getVal (vm: MVVM, expr) {
+    expr = expr.split('.')
+    return expr.reduce((prev, next) => {
+      return prev[next]
+    }, vm.$data)
+  }
+
+  private get () {
+    Dep.target = this
+    let value = this.getVal(this.vm, this.expr)
+    Dep.target = null
+    return value
+  }
+}
+
+class Dep {
+  static target: Watcher
+
+  private subs: Watcher[] = []
+
+  public addSub (sub: Watcher) {
+    this.subs.push(sub)
+  }
+
+  public notify () {
+    this.subs.forEach(watcher => watcher.update())
+  }
+
+}
+
+class MVVM {
+  public $data: any
+  private $el: HTMLElement
+  
+
+  constructor (options) {
+    this.$el = options.el
+    this.$data = options.data
+
+    if (this.$el) {
+      let _
+      _ = new Observer(this.$data)
+      this.proxyData(this.$data)
+      _ = new Compile(this.$el, this)
+    }
+  }
+
+  private proxyData (data) {
+    Object.keys(data).forEach(key => {
+      Object.defineProperty(this, key, {
+        get () {
+          return data[key]
+        },
+        set (newValue) {
+          data[key] = newValue
+        }
+      })
+    })
+  }
+}
+
+
+
+// 主程序开始
+const app = document.querySelector('#app')
+const options = {
+  el: app,
+  data: {
+    name: 'Treasure',
+    age: 22,
+    school: {
+      name: '成都大学',
+      profession: '数字媒体技术'
+    }
+  }
+}
+const vm = new MVVM(options)
+console.log(vm)

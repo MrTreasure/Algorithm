@@ -1,3 +1,5 @@
+
+
 class Foo {
   propA: any
   propB: any
