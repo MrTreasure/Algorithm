@@ -14,7 +14,7 @@ function select (arr: any[]): any[] {
   return sortedArr
 }
 
-const arr = produceNums(20)
+const arr = produceNums(20, 20)
 console.log(arr)
 console.time('sort')
 console.log(select(arr))

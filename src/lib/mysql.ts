@@ -1,9 +1,9 @@
-import { createPool } from 'mysql2';
-import { Pool } from 'mysql';
-import config from '../config';
-import { MysqlClient } from './MysqlClient';
+import { createPool } from 'mysql2'
+import { Pool } from 'mysql'
+import config from '../config'
+import { MysqlClient } from './MysqlClient'
 
-const { mysqlConfig } = config;
+const { mysqlConfig } = config
 
 const pool: Pool = createPool({
   host: mysqlConfig.host,
@@ -14,6 +14,6 @@ const pool: Pool = createPool({
   connectionLimit : mysqlConfig.connectionLimit
 })
 
-const mysql = new MysqlClient(pool);
+const mysql = new MysqlClient(pool)
 
-export default mysql;
+export default mysql
