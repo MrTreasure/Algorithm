@@ -1,7 +1,8 @@
 ## 前言
 面试的时候问起vue的原理，大部分的人都会说通过Object.defineProperty修改属性的get, set方法，从而达到数据改变的目的。然而作为vue的MVVM驱动核心，从数据的改变到视图的改变，远远不止这句话就能解释，而是通过Observer, Dep, Watcher, Compile 4个类以及一个CpompileUtil辅助类完成，本文将以深入浅出的方式，分析从初始化DOM和data到数据的渲染，MVVM背后究竟发生了什么
 
-本文代码翻译与文章[掘金——看完这篇关于MVVM的文章，面试通过率提升了80%](https://juejin.im/post/5af8eb55f265da0b814ba766)
+本文代码翻译于文章
+[掘金——看完这篇关于MVVM的文章，面试通过率提升了80%](https://juejin.im/post/5af8eb55f265da0b814ba766)
 
 ## 源码
 本文源码 [github](../src/vue/mvvm.ts) 欢迎star
