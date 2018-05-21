@@ -57,19 +57,18 @@ class Compile {
     })
   }
 
-  private node2fragment (el): DocumentFragment {
+  private node2fragment (el: HTMLElement): DocumentFragment {
     const fragment = document.createDocumentFragment()
-    let firstChild
-    while (firstChild === el.firstChild) {
-      fragment.appendChild(firstChild)
-    }
+    Array.from(el.childNodes).forEach(child => {
+      fragment.appendChild(child)
+    })
     return fragment
   }
 }
 
 class CompileUtil {
   static updater = {
-    textUpdate (node: Element, value: any) {
+    textUpdater (node: Element, value: any) {
       node.textContent = value
     },
     modelUpdater (node: Element, value) {
@@ -112,7 +111,7 @@ class CompileUtil {
 
   static getTextVal (vm, expr) {
     return expr.replace(/\{\{([^}]+)\}\}/g, (...args) => {
-      return this.getTextVal(vm, args[1])
+      return this.getVal(vm, args[1])
     })
   }
 
