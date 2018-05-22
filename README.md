@@ -37,6 +37,7 @@
 * [cluster](./visio/cluster.vsdx)
 * [RabbitMQ](./visio/RabbitMQ.vsdx)
 * [Koa](./visio/Koa.xmind)
+* [Vue原理](./MVVM驱动.xmind)
 
 ## 代码片段
 * [统一ajax工具](./gist/ajax.js)
