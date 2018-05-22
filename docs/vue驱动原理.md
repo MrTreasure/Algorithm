@@ -34,7 +34,7 @@
     this.observe(data)
   }
 ```
-Observer的构造方法中将会调用observe方法遍历检测每一个属性，如果该属性不是对象则返回，否则调用defineReactive方法对重写每一个属性的get, set方法，defineReactTive也会成一个依赖收集器Dep
+Observer的构造方法中将会调用observe方法遍历检测每一个属性，如果该属性不是对象则返回，否则调用defineReactive方法拦截每一个属性的get, set方法，defineReactTive也会新建一个依赖收集器Dep
 
 ### Dep
 ```javascript
@@ -56,7 +56,7 @@ class Dep {
 这个依赖收集器的代码比较简单，内置一个Watcher数组，当defineReactive修改属性的get方法时，根据Dep.target是否存在将Wathcher加入到Dep的数组中，每次属性改变set时，调用这个属性的Dep.notify方法通知订阅该属性的Watcher修改自己的状态
 
 ### Compile(在Vue中，这个步骤是交给virtualDOM完成的，这里只是简单的实现一个文本节点的编译)
-完成数据项的响应话适配后(defineReactive, 生成Dep两个步骤),接着开始编译绑定的el节点
+完成数据项的响应适配后(defineReactive, 生成Dep两个步骤),接着开始编译绑定的el节点
 ```javascript
   constructor (el: any, vm: MVVM) {
     this.el = this.isElementNode(el) ? el : document.querySelector(el)
@@ -102,7 +102,7 @@ static setVal (vm: MVVM, expr, value) {
 在进行编译的时候，有两次获取到对应的vm.$data中的属性。第一次是为了在初次构建的时候获取值进行DOM的渲染，此时Dep.target为null，第二次是为了将updateFn添加到属性的Dep中。这里便解释了为什么进行Dep添加时为什么要判断是否存在Dep.target对象。因为初始化的时候，并不需要进行依赖收集
 
 ### 数据发生改变
-当data中的某一项数据发生改变是，将调用这个属性的Dep的notify方法，通知订阅了该属性的Watcher调用自身的update方法改变DOM
+当data中的某一项数据发生改变时，将调用这个属性的Dep的notify方法，通知订阅了该属性的Watcher调用自身的update方法改变DOM
 
 ## 总结
 1. vue就是通过以上的几个类实现了完整的MVVM模式，不同的是vue拥有更加完整的CpmpileUtil方法，针对每一个指令以及一些绑定添加特殊的updateFn方法。vue也使用了virtualDOM统一管理了对于DOM的操作
