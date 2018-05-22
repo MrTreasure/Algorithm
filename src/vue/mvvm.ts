@@ -251,10 +251,13 @@ const options = {
     name: 'Treasure',
     age: 22,
     school: {
-      name: '成都大学',
-      profession: '数字媒体技术'
+      name: '布莱登大学',
+      profession: '计算机科学与技术'
     }
   }
 }
 const vm = new MVVM(options)
 console.log(vm)
+window.setTimeout(() => {
+  vm['name'] = 'Sunshine'
+})
