@@ -34,7 +34,8 @@
 
 ## 思维图
 * [cluster](./visio/cluster.vsdx)
-* [RabbitMQ](./RabbitMQ.vsdx)
+* [RabbitMQ](./visio/RabbitMQ.vsdx)
+* [Koa](./visio/Koa.xmind)
 
 ## 代码片段
 * [统一ajax工具](./gist/ajax.js)
