@@ -1,3 +1,9 @@
+import * as path from 'path'
+import * as puppeteer from 'puppeteer'
+import mongo from '../lib/mongoDb'
+
+import chalk from 'chalk'
+
 interface ILocal {
   name: string
   img: string
