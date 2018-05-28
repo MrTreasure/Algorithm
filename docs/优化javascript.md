@@ -46,3 +46,16 @@ WASM 让你能够用 JavaScript 之外的语言（例如 C、C++、Rust 或其�
 2. 预连接 Preconnect ```<link rel="preconnect" href="http://example.com">```
 3. 预获取 Prefetching ```<link rel="prefetch" href="image.png">```
 4. 预渲染 Prerender ```<link rel="prerender" href="http://example.com">```(实测差距不大)
+
+## 缓存机制
+* 减少冗余数据传输
+* 缓解网络瓶颈
+* 降低服务器负载
+* 加快响应
+
+![缓存模型](../img/http-cache-decision-tree.png)
+```javascript
+const script = document.createElement('script')
+script.src = '../index.js?' + Date.now()
+document.body.appendChild(script)
+```

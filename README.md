@@ -40,6 +40,7 @@
 * [Koa](./visio/Koa.xmind)
 * [Vue原理](./MVVM驱动.xmind)
 * [OSI七层模型详解](./img/OSI七层模型.png)
+* [缓存模型](./img/http-cache-decision-tree.png)
 
 ## 代码片段
 * [统一ajax工具](./gist/ajax.js)
