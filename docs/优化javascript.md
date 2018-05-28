@@ -40,3 +40,9 @@ WASM 让你能够用 JavaScript 之外的语言（例如 C、C++、Rust 或其�
 3. 布局 —— 一旦浏览器知道哪些规则适用于元素，就可以开始计算后者占用的空间以及它在浏览器屏幕上的位置。Web 的布局模型定义了一个元素可以影响其他元素。例如，<body> 的宽度会影响子元素的宽度等等。这一切都意味着布局过程是计算密集型的。该绘图是在多个图层完成的。
 4. 绘图 —— 这里开始填充实际的像素。该过程包括绘制文本、颜色、图像、边框、阴影等 —— 每个元素的每个视觉部分。
 5. 合成 —— 由于页面部件被划分为多层，因此需要按照正确的顺序将其绘制到屏幕上，以便正确地渲染页面。这非常重要，特别是对于重叠元素来说。
+
+## 浏览器预加载策略
+1. DNS预解析 DNS-Prefetch ```<link rel="dns-prefetch" href="//example.com">```
+2. 预连接 Preconnect ```<link rel="preconnect" href="http://example.com">```
+3. 预获取 Prefetching ```<link rel="prefetch" href="image.png">```
+4. 预渲染 Prerender ```<link rel="prerender" href="http://example.com">```(实测差距不大)
