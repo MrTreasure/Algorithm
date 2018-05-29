@@ -24,6 +24,7 @@
 * [从实现一个Promise说起](./docs/从实现一个Promise说起.md)
 * [vue驱动原理](./docs/vue驱动原理.md)
 * [了解VirtualDOM](./docs/了解VirtualDOM.md)
+* [优化javascript](./docs/优化javascript.md)
 
 ## 算法
 * [消息队列](./src/RabbitMQ)

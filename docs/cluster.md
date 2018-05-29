@@ -95,6 +95,45 @@ interface cmd {
 
 这样我们可以指定一个进程作为 agent 进程，用于实现自己定义的事务。在 egg 中，主线程启动后 首先 fork agent进程，当 agent 进程启动完成后再启动具体的 worker 进程。参照上面的代码，相信这部分逻辑现在也不难实现了。这样 agent 就会获得 id 为1的进程
 
+## 手动处理worker间的调度算法
+```javascript
+// master.js
+const net = require('net');
+const fork = require('child_process').fork;
+
+var workers = [];
+for (var i = 0; i < 4; i++) {
+   workers.push(fork('./worker'));
+}
+
+var handle = net._createServerHandle('0.0.0.0', 3000);
+handle.listen();
+handle.onconnection = function (err,handle) {
+    // 通过某种算法决策出一个子进程处理请求
+    var worker = workers.pop();
+    worker.send({},handle);
+    workers.unshift(worker);
+}
+
+// worker.js
+const net = require('net');
+process.on('message', function (m, handle) {
+  start(handle);
+});
+
+var buf = 'hello Node.js';
+var res = ['HTTP/1.1 200 OK','content-length:'+buf.length].join('\r\n')+'\r\n\r\n'+buf;
+
+function start(handle) {
+    console.log('got a connection on worker, pid = %d', process.pid);
+    var socket = new net.Socket({
+        handle: handle
+    });
+    socket.readable = socket.writable = true;
+    socket.end(res);
+}
+```
+
 ## 最后
 P.S 勘误，图2中的线程应该为进程，独立的nodejs进程
 
