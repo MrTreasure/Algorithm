@@ -99,6 +99,48 @@ event loop顾名思义就是事件循环，为什么要有事件循环呢？因�
 
 7. close callbacks
 关闭I/O的动作，比如文件描述符的关闭，链接断开，等等等
+```c++
+// v8中的源码部分
+int uv_run(uv_loop_t* loop, uv_run_mode mode) {
+  int timeout;
+  int r;
+  int ran_pending;
+
+  r = uv__loop_alive(loop);
+  if (!r)
+    uv__update_time(loop);
+
+//这里就是那个被称作event loop的while loop
+  while (r != 0 && loop->stop_flag == 0) {
+    uv__update_time(loop);
+    uv__run_timers(loop);
+    ran_pending = uv__run_pending(loop);
+    uv__run_idle(loop);
+    uv__run_prepare(loop);
+
+    timeout = 0;
+    if ((mode == UV_RUN_ONCE && !ran_pending) || mode == UV_RUN_DEFAULT)
+      timeout = uv_backend_timeout(loop);
+
+    uv__io_poll(loop, timeout);
+    uv__run_check(loop);
+    uv__run_closing_handles(loop);
+
+    if (mode == UV_RUN_ONCE) {
+      uv__update_time(loop);
+      uv__run_timers(loop);
+    }
+
+    r = uv__loop_alive(loop);
+    if (mode == UV_RUN_ONCE || mode == UV_RUN_NOWAIT)
+      break;
+  }
+  if (loop->stop_flag != 0)
+    loop->stop_flag = 0;
+
+  return r;
+}
+```
 
 除了Task还有一个microtask，这一个概念是ES6提出Promise以后出现的。这个microtask queue只有一个。并且会在且一定会在每一个Task后执行，且执行是按顺序的。加入到microtask 的事件类型有Promise.resolve().then(), process.nextTick() 值得注意的是，event loop一定会在执行完micrtask以后才会寻找新的 可执行的Task队列。而microtask事件内部又可以产生新的microtask事件比如
 ```javascript
