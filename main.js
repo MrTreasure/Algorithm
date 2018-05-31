@@ -1,12 +1,7 @@
-const obj = {
-  a: 10
-}
+Promise.resolve('promise').then(res => {
+  console.log(res)
+})
 
-const fun = () => {
-  console.log(this.a)
-}
-
-fun.call(obj)
-
-fun()
-
+process.nextTick(() => {
+  console.log('nextTick')
+})
