@@ -25,6 +25,7 @@
 * [vue驱动原理](./docs/vue驱动原理.md)
 * [了解VirtualDOM](./docs/了解VirtualDOM.md)
 * [优化javascript](./docs/优化javascript.md)
+* [常用的JS概念](./docs/常用的JS概念.md)
 
 ## 算法
 * [消息队列](./src/RabbitMQ)
