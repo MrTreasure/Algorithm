@@ -7,18 +7,17 @@
 * **邮箱** treasurewmj@foxmail.com
 * **Github** https://github.com/MrTreasure
 * **毕业院校** 成都大学 数字媒体技术 本科
-* **期望工作地点** 成都
+* **期望工作地点** 成都 上海
 
 ### 技能简介
 1. 熟练HTML+CSS+JS开发（前端本职）
 2. 熟练Vue全家桶开发，根据业务需求自定义组件；使用过React mobx开发
 3. 熟练使用Typescript开发，并在vscode下调试（后端项目均使用TS编写）
-4. 熟悉node的基本模块，熟练使用Koa搭建web服务器，掌握eggjs的开发(熟悉eventloop cluster net等模块，够通过装饰器完成注解驱动开发)
-5. 掌握mysql，mongodb，redis在node环境下的开发使用（自行扩展了mysql，mongodb的驱动实现了promisify，查询语句使用的不是很6）
-6. 了解golang的开发
-7. 了解密码学常用概念（散列，对称加密，消息认证，非对称加密，数字签名），并使用crypto块完成了各自的实现
-8. 掌握基本的linux环境命令，有过linux部署经验
-9. 知乎社区前端话题活跃回答者，github社区活跃用户，简书博主
+4. 熟悉node的基本模块，熟练使用Koa搭建web服务器
+5. 掌握mysql，mongodb，redis在node环境下的开发使用
+6. 了解密码学常用概念，并使用crypto块完成了各自的实现
+7. 掌握基本的linux环境命令，有过linux部署经验
+8. 知乎社区前端话题活跃回答者，github社区活跃用户，简书博主
 
 ### 工作经历
 • 2017年10月——至今                    深圳竹云科技有限公司                 前端工师
