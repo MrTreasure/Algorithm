@@ -36,6 +36,10 @@
 * [冒泡排序](./src/sort/bubble.ts)
 * [插入排序](./src/sort/insert.ts)
 
+### 数据结构
+* [常见定义](./docs/basic/0x00.md)
+* [常见数据结构ADT](./docs/basic/0x01.md)
+
 ## 思维图
 * [cluster](./visio/cluster.vsdx)
 * [RabbitMQ](./visio/RabbitMQ.vsdx)
