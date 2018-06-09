@@ -25,6 +25,7 @@
 * [vue驱动原理](./docs/vue驱动原理.md)
 * [了解VirtualDOM](./docs/了解VirtualDOM.md)
 * [优化javascript](./docs/优化javascript.md)
+* [常用的JS概念](./docs/常用的JS概念.md)
 
 ## 算法
 * [消息队列](./src/RabbitMQ)
@@ -34,6 +35,10 @@
 * [快速排序](./src/sort/quick.ts)
 * [冒泡排序](./src/sort/bubble.ts)
 * [插入排序](./src/sort/insert.ts)
+
+### 数据结构
+* [常见定义](./docs/basic/0x00.md)
+* [常见数据结构ADT](./docs/basic/0x01.md)
 
 ## 思维图
 * [cluster](./visio/cluster.vsdx)
