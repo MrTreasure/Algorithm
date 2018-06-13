@@ -2,6 +2,7 @@ import 'reflect-metadata'
 import * as moment from 'moment'
 import { createConnection, getConnection } from 'typeorm'
 import { User } from './entities/User'
+import { Todo } from './entities/Todo'
 
 const mysql = createConnection({
   name: 'mysql',
@@ -11,19 +12,20 @@ const mysql = createConnection({
   username: 'root',
   password: 'Sunshine',
   database: 'xiaoai',
-  entities: [User],
+  entities: [User, Todo],
   synchronize: true
 })
 
 const main = async () => {
   await mysql
   const conn = getConnection('mysql')
-  let user = new User()
-  user.lastActived = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
-  user.openId = 'Treasure'
-  user = await conn.manager.save(user)
-  const result = await conn.manager.find(User)
-  console.log(user.id)
+
+  const userList = await conn.manager.find(User, { id: 1 })
+
+  for (let i = 0 ; i < 10 ; i++) {
+    let todo = new Todo()
+  }
+ 
   conn.close()
 }
 
