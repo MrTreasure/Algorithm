@@ -26,6 +26,7 @@
 * [了解VirtualDOM](./docs/了解VirtualDOM.md)
 * [优化javascript](./docs/优化javascript.md)
 * [常用的JS概念](./docs/常用的JS概念.md)
+* [函数防抖与节流](./src/debounce/index.ts)
 
 ## 算法
 * [消息队列](./src/RabbitMQ)
