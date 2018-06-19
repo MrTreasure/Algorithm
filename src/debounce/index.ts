@@ -22,6 +22,38 @@ const throttle = (dealy: number, fun: Function): Function => {
   }
 }
 
+const decoratorDebounce = (dealy: number) => {
+  let timer = null
+  return (target, propertyKey, descriptor) => {
+    let method = descriptor.value
+    descriptor.value = function (...args) {
+      if (timer) {
+        global.clearTimeout(timer)
+      } else {
+        timer = global.setTimeout(() => {
+          return method.apply(target, args)
+        }, dealy)
+      }
+    }
+  }
+}
+
+const decoratorThrottle = (dealy: number) => {
+  let timer = null
+  return (target, propertyKey, descriptor) => {
+    let method = descriptor.value
+    descriptor.value = function (...args) {
+      if (timer) {
+        return
+      } else {
+        timer = global.setTimeout(() => {
+          return method.apply(target, args)
+        }, dealy)
+      }
+    }
+  }
+}
+
 
 // test
 function log (str: string | number) {
