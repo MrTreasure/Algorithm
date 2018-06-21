@@ -54,6 +54,26 @@ export class Node {
       }
     }
   }
+
+  public colorDFSWalk (callBack: Function) {
+    const stack = new Stack<any>()
+    let current: Node = this
+    const color = []
+
+    while (current || stack.sizeOf() > 0) {
+      if (current) {
+        if (color[current.data] !== 'black') {
+          stack.push(current)
+        }
+
+        current = current.children.find(n => n && color[n.data] !== 'black') 
+
+      } else {
+        current = stack.pop()
+        color[current.data] = 'black'
+      }
+    }
+  }
 }
 
 export class Tree {
