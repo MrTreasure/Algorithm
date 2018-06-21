@@ -1,7 +1,3 @@
-Promise.resolve('promise').then(res => {
-  console.log(res)
-})
+let str = '  Treasure  '
 
-process.nextTick(() => {
-  console.log('nextTick')
-})
+console.log(str.trimStart().trimEnd())

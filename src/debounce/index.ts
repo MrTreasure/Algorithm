@@ -72,6 +72,15 @@ function log (str: string | number) {
 // debounceLog(3)
 
 class Test {
+
+  map: Map<string | number, number | string >
+
+  constructor () {
+    // this.map = new Map()
+    // this.map.set(1, 2)
+    // this.map.set(2, '4')
+  }
+
   @decoratorDebounce(1000)
   say (str) {
     console.log(str)
