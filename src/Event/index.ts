@@ -1,20 +1,27 @@
-const EventEmitter = require('events').EventEmitter
+// const file = require('./file')
+// const a = require('./file')
 
-const A = new EventEmitter()
+import b, { a } from './file'
+console.log(b, a)
 
-A.on('msg', (msg, callback) => {
-  console.log(msg)
-  callback('Back Message:' + msg)
-})
+// const EventEmitter = require('events').EventEmitter
 
-const sendMsg = msg => {
-  return new Promise((resolve, reject) => {
-    A.emit('msg', msg, (res) => {
-      resolve(res)
-    })
-  })
-}
+// const A = new EventEmitter()
 
-sendMsg('Hello Event').then(res => {
-  console.log(res)
-})
+// A.on('msg', (msg, callback) => {
+//   console.log(msg)
+//   callback('Back Message:' + msg)
+// })
+
+// const sendMsg = msg => {
+//   return new Promise((resolve, reject) => {
+//     A.emit('msg', msg, (res) => {
+//       resolve(res)
+//     })
+//   })
+// }
+
+// sendMsg('Hello Event').then(res => {
+//   console.log(res)
+// })
+

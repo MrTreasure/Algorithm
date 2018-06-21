@@ -1,0 +1,13 @@
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": 3306,
+  "username": "root",
+  "password": "Sunshine",
+  "database": "xiaoai",
+  "synchronize": true,
+  "logging": false,
+  "entities": ["./entities/**/*.ts"],
+  "migrations": ["./migration/**/*.ts"],
+  "subscribers": ["./subscriber/**/*.ts"]
+}
