@@ -1,10 +1,12 @@
 ## 简历
 
 ### 个人信息
+<!--
 * **姓名** 吴明骏
 * **微信号** TreasureTesla
 * **电话** 13550038728
 * **邮箱** treasurewmj@foxmail.com
+ -->
 * **Github** https://github.com/MrTreasure
 * **毕业院校** 成都大学 数字媒体技术 本科
 * **期望工作地点** 成都 上海
