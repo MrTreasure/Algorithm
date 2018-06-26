@@ -77,18 +77,36 @@ export class Node {
 }
 
 export class Tree {
-  
+  public preOrder (node) {
+    const stack = []
+    let current
+    stack.push(node)
+    while (stack.length > 0) {
+      current = stack.pop()
+      console.log(current.val)
+      if (current.right) {
+        stack.push(current.right)
+      }
+      if (current.legt) {
+        stack.push(current.left)
+      }
+    }
+  }
+
+  public inOrder (node) {
+    const stack = []
+    let current = node
+    while (current || stack.length > 0) {
+      while (current) {
+        stack.push(current)
+        current = current.left
+      }
+      if (stack.length > 0) {
+        current = stack.pop()
+        console.log(current.val)
+        current = current.right
+      }
+    }
+  }
 }
 
-function assign<T extends U, U> (target: T, source: U): T {
-  // for (let id in source) {
-  //   target[id] = source[id]
-  // }
-  // Object.keys(source).forEach((key) => {
-  //   target[key] = source[key]
-  // })
-  Object.getOwnPropertyNames(source).forEach(key => {
-    target[key] = source[key]
-  })
-  return target
-}
