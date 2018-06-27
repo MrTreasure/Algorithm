@@ -18,8 +18,10 @@ const root = {
   }
 }
 
+const arr = [3, 9, 20, null, null, 15, 9]
+
 export class Tree {
-  public preOrder (node) {
+  static preOrder (node) {
     const stack = []
     let current
     stack.push(node)
@@ -35,7 +37,7 @@ export class Tree {
     }
   }
 
-  public inOrder (node) {
+  static inOrder (node) {
     const stack = []
     let current = node
     while (current || stack.length > 0) {
@@ -51,7 +53,7 @@ export class Tree {
     }
   }
 
-  public postOrder (node) {
+  static postOrder (node) {
     const stack = []
     let current = node
     let prev = null
@@ -72,7 +74,7 @@ export class Tree {
     }
   }
 
-  public postOrder2 (node) {
+  static postOrder2 (node) {
     const stack = []
     const arr = []
     let current = null
@@ -91,7 +93,7 @@ export class Tree {
     return arr.reverse()
   }
 
-  public levelOrder (root) {
+  static levelOrder (root) {
     const queue = []
     const output = []
     let current = null
@@ -103,7 +105,9 @@ export class Tree {
       
       while (count--) {
         current = queue.shift()
-        arr.push(current.val)
+        if (current.val) {
+          arr.push(current.val)
+        }
         
         if (current.left) {
           queue.push(current.left)
@@ -119,4 +123,28 @@ export class Tree {
 
     return output
   }
+
+  static arr2Tree (arr: number[]) {
+    const nodeList = arr.map(val => ({ val, left: null, right: null }))
+    const MAX = Math.floor(arr.length / 2 - 1)
+    const LEN = arr.length
+
+    for (let i = 0; i <= MAX; i++) {
+      if (2 * i + 1 <= LEN) {
+        nodeList[i].left = nodeList[2 * i + 1]
+      }
+      if (2 * i + 2 <= LEN) {
+        nodeList[i].right = nodeList[2 * i + 2]
+      }
+    }
+
+    return nodeList
+  }
 }
+
+
+const tree = Tree.arr2Tree(arr)
+console.log(tree)
+// console.log(Tree.preOrder(tree))
+// console.log(Tree.inOrder(tree))
+

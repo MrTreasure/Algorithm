@@ -55,3 +55,7 @@ function heapSort (arr: number[]) {
 const arr = produceNums(5, 10)
 console.log(arr)
 console.log(heapSort(arr))
+
+exports.a = 1
+
+module.exports = {}
