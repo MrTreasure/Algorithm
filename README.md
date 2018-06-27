@@ -31,11 +31,14 @@
 ## 算法
 * [消息队列](./src/RabbitMQ)
 * [栈结构](./src/Stack)
-* [二次树](./src/Tree)
+* [二叉树](./src/Tree)
 * [选择排序](./src/sort/select.ts)
 * [快速排序](./src/sort/quick.ts)
 * [冒泡排序](./src/sort/bubble.ts)
 * [插入排序](./src/sort/insert.ts)
+
+## Leetcode
+* [二叉树相关](./src/leetcode/0x02.ts)
 
 ### 数据结构
 * [常见定义](./docs/basic/0x00.md)
