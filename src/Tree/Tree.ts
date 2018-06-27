@@ -108,5 +108,45 @@ export class Tree {
       }
     }
   }
+
+  public postOrder (node) {
+    const stack = []
+    let current = node
+    let prev = null
+    while (current || stack.length > 0) {
+      if (current) {
+        stack.push(current)
+      } else {
+        current = stack[stack.length - 1]
+        if (current.right && current.right !== prev) {
+          current = current.right
+        } else {
+          current = stack.pop()
+          console.log(current.val)
+          prev = current
+          current = null
+        }
+      }
+    }
+  }
+
+  public postOrder2 (node) {
+    const stack = []
+    const arr = []
+    let current = null
+    stack.push(node)
+    while (stack.length > 0) {
+      current = stack.pop()
+      arr.push(current.val)
+      if (current.left) {
+        stack.push(current.left)
+      }
+      if (current.right) {
+        stack.push(current.right)
+      }
+    }
+
+    return arr.reverse()
+  }
 }
 
