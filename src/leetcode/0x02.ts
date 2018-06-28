@@ -167,12 +167,46 @@ export class Tree {
 
     return root
   }
+
+  static tree2Arr (root) {
+    // 树转数组
+    const arr = []
+    const queue = []
+    let current
+    queue.push(root)
+
+    while (queue.length > 0) {
+      current = queue.shift()
+      arr.push(current.val)
+      if (current.left && current.left.val) {
+        queue.push(current.left)
+      } else if (current.val) {
+        queue.push({ val: null })
+      }
+      if (current.right && current.right.val) {
+        queue.push(current.right)
+      } else if (current.val) {
+        queue.push({ val: null })
+      }
+    }
+
+    // 清理无用节点
+    const MAX = Math.floor(arr.length / 2 - 1)
+    const removeList = []
+    for (let i = 0; i <= MAX; i++) {
+      if (!arr[i]) {
+        removeList.push(2 * i + 1)
+        removeList.push(2 * i + 2)
+      }
+    }
+    return arr.filter((item, index) => !removeList.includes(index))
+  }
 }
 
 
 // const tree = Tree.filterNullNode(Tree.arr2Tree(arr))
-const tree = Tree.arr2Tree(arr)
-console.log(Tree.filterNullNode(tree))
+const tree = Tree.arr2Tree([ 3, 9, 20, null, null, 15, 9])
+console.log(Tree.tree2Arr(Tree.filterNullNode(tree)))
 // console.log(Tree.preOrder(tree))
 // console.log(Tree.inOrder(tree))
 
