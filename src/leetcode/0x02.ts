@@ -131,20 +131,48 @@ export class Tree {
 
     for (let i = 0; i <= MAX; i++) {
       if (2 * i + 1 <= LEN) {
-        nodeList[i].left = nodeList[2 * i + 1]
+        // nodeList[i].left = nodeList[2 * i + 1]
+        if (nodeList[2 * i + 1] && nodeList[2 * i + 1].val) {
+          nodeList[i].left = nodeList[2 * i + 1]
+        }
       }
       if (2 * i + 2 <= LEN) {
-        nodeList[i].right = nodeList[2 * i + 2]
+        if (nodeList[2 * i + 2] && nodeList[2 * i + 2].val) {
+          nodeList[i].right = nodeList[2 * i + 2]
+        }
       }
     }
 
-    return nodeList
+    return nodeList[0]
+  }
+
+  static filterNullNode (root) {
+    const stack = []
+    let current
+    stack.push(root)
+
+    while (stack.length > 0) {
+      current = stack.pop()
+      if (current.right && current.right.val) {
+        stack.push(current.right)
+      } else {
+        Reflect.deleteProperty(current, 'right')
+      }
+      if (current.left && current.left.val) {
+        stack.push(current.left)
+      } else {
+        Reflect.deleteProperty(current, 'left')
+      }
+    }
+
+    return root
   }
 }
 
 
+// const tree = Tree.filterNullNode(Tree.arr2Tree(arr))
 const tree = Tree.arr2Tree(arr)
-console.log(tree)
+console.log(Tree.filterNullNode(tree))
 // console.log(Tree.preOrder(tree))
 // console.log(Tree.inOrder(tree))
 
