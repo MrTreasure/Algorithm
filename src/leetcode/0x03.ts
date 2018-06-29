@@ -36,11 +36,23 @@ namespace Coin {
 }
 
 const Fibonacci = (n: number) => {
-  if (n === 1 || n === 2) {
-    return 1
-  }
+  const map = new Map()
+  map.set(1, 1)
+  map.set(2, 1)
 
-  return 0
+  const solve = num => {
+    if (num === 1 || num === 2) {
+      return map.get(1)
+    }
+    for (let i = 3; i < num; i++) {
+      let A = map.get(num - 2)
+      let B = map.get(num - 1)
+      console.log(A, B)
+      map.set(num, A + B)
+    }
+    return map.get(num)
+  }
+  return solve(n)
 }
 
 const robber = nums => {
@@ -70,4 +82,4 @@ const robber = nums => {
   return solve(nums.length - 1, nums)
 }
 
-console.log(Fibonacci(100))
+console.log(Fibonacci(4))
