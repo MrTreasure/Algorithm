@@ -9,3 +9,65 @@ const twoSum = (nums: number[], target: number) => {
     }
   }
 }
+
+namespace Coin {
+  const coins = [1, 3, 5]
+  export const minCoin = (price): number => {
+    if (price <= 0) {
+      return 0
+    }
+    if (price === 1) {
+      return 1
+    }
+    if (price === 2) {
+      return 2
+    }
+    if (price === 3) {
+      return 1
+    }
+    if (price === 4) {
+      return 2
+    }
+    if (price === 5) {
+      return 1
+    }
+    return Math.min(...[minCoin(price - 1) + 1, minCoin(price - 3) + 1, minCoin(price - 5) + 1])
+  }
+}
+
+const Fibonacci = (n: number) => {
+  if (n === 1 || n === 2) {
+    return 1
+  }
+
+  return 0
+}
+
+const robber = nums => {
+  const map = new Map()
+  map.set(0, nums[0])
+  map.set(1, Math.max(nums[0], nums[1]))
+
+
+  const solve = (index, nums) => {
+    if (index === 0) {
+      return map.get(0)
+    }
+    if (index === 1) {
+      return map.get(1)
+    }
+    
+    for (let i = 2; i < nums.length; i++) {
+      let A = map.get(i - 2)
+      let B = map.get(i - 1)
+      map.set(i, Math.max(A, B))
+    }
+    
+    return map.get(nums.length - 1)
+  }
+  
+  if (nums.length === 0) return 0
+  return solve(nums.length - 1, nums)
+}
+
+console.log(Fibonacci(100))
