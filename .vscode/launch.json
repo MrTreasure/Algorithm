@@ -20,8 +20,8 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Net",
-      "program": "${workspaceFolder}/dist/Net/server.js"
+      "name": "leetcode",
+      "program": "${workspaceFolder}/dist/leetcode/0x03.js"
     },
     {
       "type": "node",

@@ -10,31 +10,22 @@ const twoSum = (nums: number[], target: number) => {
   }
 }
 
-namespace Coin {
-  const coins = [1, 3, 5]
-  export const minCoin = (price): number => {
-    if (price <= 0) {
-      return 0
-    }
-    if (price === 1) {
-      return 1
-    }
-    if (price === 2) {
-      return 2
-    }
-    if (price === 3) {
-      return 1
-    }
-    if (price === 4) {
-      return 2
-    }
-    if (price === 5) {
-      return 1
-    }
-    return Math.min(...[minCoin(price - 1) + 1, minCoin(price - 3) + 1, minCoin(price - 5) + 1])
+// 最小硬币问题
+const coin = price => {
+  const map = new Map<number, number>()
+  map.set(0, 0)
+  map.set(1, 1)
+  map.set(2, 2)
+  map.set(3, 1)
+  map.set(4, 2)
+  map.set(5, 1)
+  for (let i = 6; i <= price; i++) {
+    map.set(i, Math.min(...[map.get(i - 1) + 1, map.get(i - 3) + 1, map.get(i - 5) + 1]))
   }
+  return map.get(price)
 }
 
+// 斐波那契数列
 const Fibonacci = (n: number) => {
   const map = new Map()
   map.set(1, 1)
@@ -44,17 +35,18 @@ const Fibonacci = (n: number) => {
     if (num === 1 || num === 2) {
       return map.get(1)
     }
-    for (let i = 3; i < num; i++) {
-      let A = map.get(num - 2)
-      let B = map.get(num - 1)
-      console.log(A, B)
-      map.set(num, A + B)
+    for (let i = 3; i <= num; i++) {
+      let A = map.get(i - 2)
+      let B = map.get(i - 1)
+      // console.log(A, B)
+      map.set(i, A + B)
     }
     return map.get(num)
   }
   return solve(n)
 }
 
+// 小偷问题
 const robber = nums => {
   const map = new Map()
   map.set(0, nums[0])
@@ -82,4 +74,18 @@ const robber = nums => {
   return solve(nums.length - 1, nums)
 }
 
-console.log(Fibonacci(4))
+// 切割钢铁
+const cutRod = size => {
+  const price = [1, 5, 8, 10, 13, 17, 18, 22, 25, 30]
+  const map = new Map()
+
+  map.set(0, 0)
+  for (let i = 1; i <= 10; i++) {
+    map.set(i, price[i])
+  }
+  for (let i = 11; i <= size; i++) {
+    map.set(i, Math.max(...[price[]]))
+  }
+}
+
+console.log(coin(5000))
