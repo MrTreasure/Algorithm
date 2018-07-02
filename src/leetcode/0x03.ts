@@ -83,9 +83,9 @@ const cutRod = size => {
   for (let i = 1; i <= 10; i++) {
     map.set(i, price[i])
   }
-  for (let i = 11; i <= size; i++) {
-    map.set(i, Math.max(...[price[]]))
-  }
+  // for (let i = 11; i <= size; i++) {
+  //   map.set(i, Math.max(...[price[]]))
+  // }
 }
 
 console.log(coin(5000))
