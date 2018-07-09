@@ -106,16 +106,5 @@ const robber = nums => {
 //   const price = [1, 5, 8, 10, 13, 17, 18, 22, 25, 30]
 //   const map = new Map()
 
-//   map.set(0, 0)
-//   for (let i = 1; i <= 10; i++) {
-//     map.set(i, price[i])
-//   }
-//   for (let i = 11; i <= size; i++) {
-//     map.set(i, Math.max(...[price[]]))
-//   }
-// }
 
-const l1 = { val: 2, next: { val: 4, next: { val: 3 } } }
-const l2 = { val: 5,next: { val: 6,next: { val: 4 } } }
 
-console.log(addTwoNumbers(l1, l2))
