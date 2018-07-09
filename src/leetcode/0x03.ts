@@ -1,3 +1,4 @@
+// 两数相加
 const twoSum = (nums: number[], target: number) => {
   const map = new Map()
   for (let i = 0; i < nums.length; i++) {
@@ -8,6 +9,32 @@ const twoSum = (nums: number[], target: number) => {
       return [index, map.get(target - nums[index])]
     }
   }
+}
+
+// 两数相加
+const addTwoNumbers = (l1, l2) => {
+  let length1 = 0
+  let length2 = 0
+
+  let current = l1
+
+  while (current.next) {
+    length1++    
+  }
+
+  current = l2
+  while (current.next) {
+    length2++
+  }
+
+  let max = Math.max(length1, length2)
+  const arr = []
+  
+  for (let i = 0; i < max;i++) {
+    let A = l1.val  
+  }
+
+ 
 }
 
 // 最小硬币问题
@@ -75,17 +102,20 @@ const robber = nums => {
 }
 
 // 切割钢铁
-const cutRod = size => {
-  const price = [1, 5, 8, 10, 13, 17, 18, 22, 25, 30]
-  const map = new Map()
+// const cutRod = size => {
+//   const price = [1, 5, 8, 10, 13, 17, 18, 22, 25, 30]
+//   const map = new Map()
 
-  map.set(0, 0)
-  for (let i = 1; i <= 10; i++) {
-    map.set(i, price[i])
-  }
-  for (let i = 11; i <= size; i++) {
-    map.set(i, Math.max(...[price[]]))
-  }
-}
+//   map.set(0, 0)
+//   for (let i = 1; i <= 10; i++) {
+//     map.set(i, price[i])
+//   }
+//   for (let i = 11; i <= size; i++) {
+//     map.set(i, Math.max(...[price[]]))
+//   }
+// }
 
-console.log(coin(5000))
+const l1 = { val: 2, next: { val: 4, next: { val: 3 } } }
+const l2 = { val: 5,next: { val: 6,next: { val: 4 } } }
+
+console.log(addTwoNumbers(l1, l2))
