@@ -4,3 +4,6 @@
 3. 将this这个变量指向这个新建的object
 4. 执行构造函数中的方法
 5. 除非构造函数显示的返回的一个非空非null的引用，否则返回这个对象
+
+## Object.create(prototype, descriptors)
+返回一个具有指定的内部原型且包含指定的属性的新对象
