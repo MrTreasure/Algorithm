@@ -7,3 +7,16 @@
 
 ## Object.create(prototype, descriptors)
 返回一个具有指定的内部原型且包含指定的属性的新对象
+
+## 对象 key 的遍历
+```javascript
+// 这两个都会遍历原型链上的属性（不包含方法）
+Object.keys()
+for (let key in obj) {
+  console.log(key)
+}
+// 只会获得对象本身的key，不包含原型链
+Object.getOwnPropertyNames()
+// 箭头函数不能用作 构造函数是因为缺少[[construct]]属性
+() => {}
+```

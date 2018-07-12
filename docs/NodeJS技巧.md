@@ -139,15 +139,3 @@ const dailyCleanup = setInterval(() => {
 
 dailyCleanup.unref();
 ```
-
-```javascript
-// 这两个都会遍历原型链上的属性（不包含方法）
-Object.keys()
-for (let key in obj) {
-  console.log(key)
-}
-// 只会获得对象本身的key，不包含原型链
-Object.getOwnPropertyNames()
-// 箭头函数不能用作 构造函数是因为缺少[[construct]]属性
-() => {}
-```
