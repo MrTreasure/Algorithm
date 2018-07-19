@@ -12,7 +12,3 @@ const obj = new Proxy({}, {
     target[key] = val
   }
 })
-
-console.log(obj.a)
-console.log(obj.a)
-console.log(obj)
