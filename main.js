@@ -1,14 +1,9 @@
-const obj = new Proxy({}, {
-  get(target, key) {
-    if (key in target) {
-      console.log(key, typeof key)
-      return target[key]
-    } else {
-      // console.log(`didn't find ${key} in ${target}, set it undefined`)
-      target[key] = undefined
-    }
-  },
-  set(target, key, val) {
-    target[key] = val
-  }
-})
+function say (name) {
+  console.log(name)
+}
+
+say.bind(null, '123')
+
+say(1230)
+
+document.crea
