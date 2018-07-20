@@ -8,8 +8,6 @@ import * as React from 'react'
 
 // import { getEChartPath } from './common'
 
-
-
 interface InitConfig {
   devicePixelRatio?: number
   renderer?: string
@@ -49,6 +47,7 @@ export const generateEChart = (components: string | string[], isMap?: boolean) =
     }
   
     public async componentDidMount () {
+      // 这段代码用于按需加载，因为ts的原因，按需加载没有用
       // try {
       //   if (Array.isArray(components)) {
       //     await Promise.all(components.map(path => {
@@ -64,7 +63,6 @@ export const generateEChart = (components: string | string[], isMap?: boolean) =
       // } catch (error) {
       //   console.error(error)
       // }
-
 
       let { theme, config } = this.props
       
@@ -124,9 +122,7 @@ export const generateEChart = (components: string | string[], isMap?: boolean) =
       this.props.debug && console.log('DOM change')
       this.chart && this.chart.resize()
     }
-
-
-  
+    
   }
 
   return Base

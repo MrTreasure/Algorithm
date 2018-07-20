@@ -181,13 +181,13 @@ handleToggle() {
 
 ```javascript
 class Base extends React.Component {
-      public async componentDidMount () {
+  public async componentDidMount () {
 
-      EventCenter.on('resize', this.handleDOMChange)
-      if (this.props.dynamic) {
-        EventCenter.on('update', this.handleUpdate)
-      }
+  EventCenter.on('resize', this.handleDOMChange)
+  if (this.props.dynamic) {
+     EventCenter.on('update', this.handleUpdate)
     }
+  }
 }
 
 class Store {
@@ -216,11 +216,122 @@ class Store {
   }
 }
 ```
-我为每一个图形组件注册了一个 update 事件(同样在unmount里注销)。然而并没有成功。尽管mobx传递给父组件的数据
+我为每一个图形组件注册了一个 update 事件(同样在unmount里注销)。然而并没有成功。尽管mobx传递给父组件的数据变化了，子组件接收的数据却没有发生变化。具体的原因可以简化为
+```javascript
+// A是父组件，B是子组件,B组件初始化时获取了A.attr引用
+const A = {
+  attr: [1 ,2, 3]
+}
+const B.prop = A.attr
+// 数据变化
+A.attr = [3, 4, 5]
+this.chart.setOption(B.prop) // B.prop === [1, 2, 3]
+```
+B.prop还保持着原来属性的引用，此时setOption并不能起作用。这和在react中直接修改state并不会导致子组件的更新一样，必须通过setState改变一样。所以如果想要setOption生效，我们就不能直接替换原数组的应用，而是保持引用修改内部的值。mobx为装饰过的数组提供了这样一个能力
+```javascript
+class Store {
+  @action
+  public handleWeek() {
+    this.xAxis.clear()
+    for (let i of this.week) {
+      this.xAxis.push(i)
+    }
+    EventCenter.emit('update')
+  }
+
+  @action
+  public handleDay() {
+    this.xAxis.clear()
+    for (let i of this.week) {
+      this.xAxis.push(i)
+    }    
+    EventCenter.emit('update')
+  } 
+}
+```
+我们通过清空原来的数组并保持组件中对数组的应用，重新填入值。再通过EventCenter触发ECharts的更新命令，这样就能使的ECharts能够正确修改。但是我们仍然不能正常通过子组件的生命周期来修改，因为对于子组件来说，它感知不到传入数据发生了变化(React通过判断浅引用来判断需要不需要更新，数据变更前后传入的 option都没有发生变化，尽管内部数据发生了改变，但是组件是不知道的)。
+
+这样的一种 hack 实现的并不优雅，首先我们引入了 EventCenter 必须每次在变动数据的时候触发 update 事件，并且数据的修改还得时刻注意不能直接修改 子组件的引用，比如不能 ```this.arr = newArr```
+
+**回到最初的目标，我们究竟需要什么样的数据驱动？**
+
+我们希望子组件尽可能的抽象，使得我们可以通过父组件传参数给子组件，子组件再绘制出相应的图表。而不是针对 Bar line map 每一个图表类型都单独生成类。并且我们还需要图表能根据父组件传递数据的变化而进行变化，并且是在子组件的生命周期执行。而不是额外指定。
+
+上面两个情况是我们实际的需求，前者我们可以通过父组件传递一个 option 选项控制图表的类型。后者我们希望在子组件的生命周期里完成，因此必须要让子组件感知到数据的变化。
+
+## 最佳实践
+```javascript
+class Store {
+  // 省略无关代码
+  @computed
+  public get diff() {
+    return {
+      xAxis: {
+        data: this.xAxis
+      }
+    }
+  }
+
+  @action
+  public handleWeek() {
+    this.xAxis = this.week
+  }
+
+  @action
+  public handleDay() {
+    this.xAxis = this.today
+  }
+}
+
+class Parent extends React.Component {
+  public state = {
+    opt: {
+      // 省略无关代码
+      xAxis: {
+        type: 'category',
+        data: store.xAxis
+      }
+    }
+  }
+  public render() {
+    return (
+      <Base opt={this.state.opt} diff={store.diff} height="65vh" debug={true}/>
+    )
+  }
+}
+
+class Base extends React.Component<Props, any>{
+  public getSnapshotBeforeUpdate () {
+    this.props.debug && console.log('snapshot', this.props.diff)
+    if (this.props.diff) {
+      this.chart && this.chart.setOption(this.props.diff)
+    }
+    return null
+  }
+}
+```
+我们仍然通过父组件传递给子组件用来渲染正确的图表，接着把需要变化的部分 diff 从 store 里单独抽出来传递给子组件。子组件通过 diff 属性接收，这样一旦 diff 发生了变化 store 便能传递给子组件，子组件也能监听到 props 的变化进而在生命周期里执行ECharts的更新操作。
+
+需要注意的是 this.chart.setOption(option: ECharts.EChartsOption) 这个 option 要实现 ECharts.EChartsOption 接口，因此我们通过 mobx 提供的 computed 属性直接将 diff 变为一个符合该接口的实现。
+
+为什么选择 ```getSnapshotBeforeUpdate``` 这个生命周期？
+
+因为在 React16 中， componentWillMount, componentWillReceiveProps, componentWillUpdate 都被标记为不安全的生命周期(和fiber算法有关), 而 getDerivedStateFromProps 是一个静态生命周期，找不到 this.chart 这个实例，因此这能选这个生命周期执行ECharts的更新
+
+## 总结
+最后的最佳实践是经过前几次的失败以后尝试出来的，当时真的很气，ECharts各种不按照自己的预计进行更新，当然事后分析了行为，发现了子组件还保持着原来数据的引用导致失败的。并且一直发现子组件的生命周期没有更新，后来仔细发现，要想是的子组件数据发生变化执行变化相关的钩子，一定得父组件使用 setState 方法， 直接更改 state 是没有效果的，这一点又回到 React 数据驱动的本质。在尝试将 diff 部分也通过 state 传递， 通过 setState 更新以后再尝试的 mobx 的改造。mobx的本质就是将 setState 部分改为了 mobx 装饰过后的数据通过代理驱动。最后取得了成功
+
+当然之所以一开始就采取直接传递 option 的方法，来自于 vue 的使用经验，具体参考[Vue下使用ECharts](https://www.jianshu.com/p/7994176fbcc4)，直接通过父组件传递 option 选项，因为 vue 有依赖收集，因此直接在子组件的 updated 周期更新 ECharts 就行了。不得不说 Vue真香
+
+## 源码
+[Echarts基类](https://github.com/MrTreasure/Algorithm/blob/master/gist/Base.tsx)
+[父组件](https://github.com/MrTreasure/Algorithm/blob/master/gist/index.tsx)
+[mobx装饰的Store](https://github.com/MrTreasure/Algorithm/blob/master/gist/store.ts)
 
 
+以上都是我瞎编的，如果你喜欢我一本正经的胡说八道，欢迎star我的 [Github](https://github.com/MrTreasure/Algorithm)
 
-## 数据驱动方法设计
+<!-- ## 数据驱动方法设计
 1. EventCenter驱动 成功
     1. mobx提供数组，数组的更改不能直接更改而是通过清空再添加
     2. 父组件直接提供 option 
@@ -235,4 +346,4 @@ class Store {
     2. Base监听不到变化(componentWillUpdate componentWillReceiveProps),  shouldComponentUpdate getSnapshotBeforeUpdate 能监听到变化
     3. setOption为 变化的数据
 4. 使用state传递配置数据 state传递变化数据 成功
-    1.  state提供变化数据 在getSnapshotBeforeUpdate中更改图形 成功
+    1.  state提供变化数据 在getSnapshotBeforeUpdate中更改图形 成功 -->
