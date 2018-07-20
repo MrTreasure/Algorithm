@@ -95,6 +95,130 @@ handleToggle() {
 ```
 在antd-pro中，他们没有分开设置， toggle是模拟了一个resize事件。总的逻辑放在了 ```window.addEventListener('resize', this.resize)``` 这段代码在每一个定义的图表类中都有，有些重复。相比引入一个 EventCenter 就能解决，这一点上我觉得我的做好更好些。当然也可以像他们一样加入节流，避免频繁触发带来的重绘消耗
 
+## 数据驱动
+### 技术选型
+在讨论数据驱动之前，我要先讲讲我的技术选型。在React上能选择的框架很多，既灵活又容易踩坑。不同的技术方案对数据的处理是不一样的。我的选型主要参考了一下几点
+1. 没有使用antd-pro，虽然这套模板在对中后台处理给的实例非常完善，基本上能做到开箱即用，改改参数就行。但是因为没有Typescript的模板，我要从JS改成TS成本太高
+2. 使用mobx而不是使用redux，因为是后台页面，每个页面的数据基本都是独立的。因此不需要把所有状态都集中到一起，我为每一个页面单独配置一个mobx驱动store，这样逻辑更加简洁，将来也能充分扩展
+![技术选型](../../img/数据流向.png)
+这就是我最后的技术选项，通过mobx提供对数据的驱动，父组件直接引用mobx配置的store实例，store中的数据发生变化时父组件就能自动更新视图。同样也可以作为参数传给子组件，子组件就能像正常的组件一样响应props的变动
+
+### 数据驱动的尝试
+在进行数据驱动尝试的时候，总共有以下4种方式
+1. state传递配置数据 state传递变化数据 setOption为的配置数据
+2. state传递配置数据 EventCenter驱动 setOption为初始变动的配置数据
+3. state传递配置数据 mobx传递变化的数据 setOption为 变化的数据
+4. state传递配置数据 mobx传递变化的数据 setOption为初始变动的配置数据
+
+其中有两种凉凉了，接下来依次讲讲每种方式的实现
+
+```javascript
+// state传递配置数据 state传递变化数据 setOption为的配置数据
+  interface IProps {
+    width?: string | number
+    height?: string | number
+    theme?: object
+    config?: InitConfig
+    opt: ECharts.EChartOption | any
+    series?: any[]
+    dynamic?: boolean,
+    diff?: any
+    debug?: boolean
+  }
+  class Base extends React.Component<Props, any> {
+
+    public chartDOM: HTMLDivElement | HTMLCanvasElement
+    public chart: ECharts.ECharts
+    public option: ECharts.EChartOption
+
+    public async componentDidMount () {
+      let { theme, config } = this.props
+      
+      theme = theme || {}
+      config = config || {}
+
+      this.option = this.props.opt
+      
+      // 延迟 500ms 等待外层 DOM 正确初始化
+      setTimeout(() => {
+        this.props.debug && console.log('mount')
+        this.chart = ECharts.init(this.chartDOM, theme, config)
+        this.chart.setOption(this.option)
+      }, 500)
+
+
+      EventCenter.on('resize', this.handleDOMChange)
+      if (this.props.dynamic) {
+        EventCenter.on('update', this.handleUpdate)
+      }
+    }
+
+    public getSnapshotBeforeUpdate () {
+      this.chart.setOption(this.option)
+      return null
+    }
+  }
+
+  class Parent extends React.Component {
+    public state = {
+      opt: {
+        // 省略无关
+        xAxis: {
+          type: 'category',
+          data: store.xAxis
+        }
+      }
+    }
+
+    public render() {
+      return (
+        <Base opt={this.state.opt} height="65vh" debug={true}/>
+      )
+    }
+  }
+```
+这种方式通过保存初始传入的配置项, 之后每次改动在 getSnapshotBeforeUpdate 中监听然后重新设置option。结果是凉凉，因为传入的opt虽然内部数据发生了变化，但是子组件感知不到,因此没有执行getSnapshotBeforeUpdate周期。我发现经管this.option发生了变化，但是子组件没有执行生命周期，因此我希望数据变化了能执行，能够执行setOption，参考之前resize的方法，做了如下改动
+
+```javascript
+class Base extends React.Component {
+      public async componentDidMount () {
+
+      EventCenter.on('resize', this.handleDOMChange)
+      if (this.props.dynamic) {
+        EventCenter.on('update', this.handleUpdate)
+      }
+    }
+}
+
+class Store {
+  
+  @observable
+  public xAxis: any[] = []
+
+
+  private week: string[] = ['2018/07/12', '2018/07/13', '2018/07/14', '2018/07/15', '2018/07/16', '2018/07/17', '2018/07/18', '2018/07/19']
+
+  constructor() {
+    this.today = GET_TIME()
+    this.xAxis = this.today
+  }
+
+  @action
+  public handleWeek() {
+    this.xAxis = this.week
+    EventCenter.emit('update')
+  }
+
+  @action
+  public handleDay() {
+    this.xAxis = this.today
+    EventCenter.emit('update')
+  }
+}
+```
+我为每一个图形组件注册了一个 update 事件(同样在unmount里注销)。然而并没有成功。尽管mobx传递给父组件的数据
+
+
 
 ## 数据驱动方法设计
 1. EventCenter驱动 成功
