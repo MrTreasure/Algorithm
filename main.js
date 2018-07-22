@@ -1,9 +1,42 @@
-function say (name) {
-  console.log(name)
+const obj = {
+  name: 'Treasure',
+  say() {
+    console.log(this.name)
+  }
 }
 
-say.bind(null, '123')
 
-say(1230)
+class A {
+  constructor() {
+    this.name = 'Treasure'
+  }
 
-document.crea
+  say() {
+    console.log(this.name)
+  }
+}
+
+class B extends A {
+  run() {
+    console.log('run')
+  }
+}
+
+const b = new B()
+
+console.log(B.prototype.say)
+
+const print = (obj) => {
+  for (let key in obj) {
+    console.log(key)
+  }
+
+  Object.keys(obj).forEach(key => console.log(key))
+
+  Object.getOwnPropertyNames(obj).forEach(key => console.log(key))
+
+  Reflect.ownKeys(obj).forEach(key => console.log(key))
+}
+
+print(b)
+console.log(b.name)
