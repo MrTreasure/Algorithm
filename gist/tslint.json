@@ -1,0 +1,42 @@
+{
+  "extends": ["tslint-config-standard", "tslint-react", "tslint-config-prettier"],
+  "linterOptions": {
+    "exclude": [
+      "config/**/*.js",
+      "node_modules/**/*.ts"
+    ]
+  },
+  "rules": {
+    "no-console": false,
+    "ordered-imports": false,
+    "jsx-no-lambda": false,
+    "no-unsafe-any": false,
+    "no-unused-variable": false,
+    "no-unused-expression": false,
+    "use-default-type-parameter": false,
+    "no-inferrable-types": false,
+    "no-floating-promises": false,
+    "no-trailing-whitespace": true,
+    "ter-indent": [ true, 2,
+      {
+          "SwitchCase": 1
+      }
+    ],
+    "one-line": [
+      true,
+      "check-open-brace",
+      "check-catch",
+      "check-else",
+      "check-whitespace"
+    ],
+    "indent": [true, "spaces"],
+    "whitespace": [
+      true,
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-separator",
+      "check-type"
+    ]
+  }
+}
