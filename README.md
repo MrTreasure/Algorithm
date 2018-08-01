@@ -64,5 +64,6 @@
 * [Vue i18n工具](./gist/lang.js)
 * [Vue 入口main文件配置](./gist/main.js)
 * [Vue 统一表格注入](./gist/table.js)
+* [React下自己使用的TSlint](./gist/tslint.json)
 
 
