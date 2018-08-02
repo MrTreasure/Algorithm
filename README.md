@@ -28,6 +28,7 @@
 * [常用的JS概念](./docs/常用的JS概念.md)
 * [函数防抖与节流](./src/debounce/index.ts)
 * [React下ECharts的数据驱动探索](./docs/Echats/React下数据驱动.md)
+* [从Highlight浅谈webpack按需加载](./docs/react笔记从highlight浅谈webpack按需加载.md)
 * [Vue知识点相关](./docs/vue笔记)
     * [Vue原型的初始化](./docs/vue笔记/01.md)
     * [面试可能提问关键的几个函数](./docs/vue笔记/02.md)
