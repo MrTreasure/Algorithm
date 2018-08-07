@@ -30,3 +30,6 @@ Object.getOwnPropertyNames()
 　　Object.getOwnPropertySymbols返回一个数组，包含对象自身的所有Symbol属性。
 5. Reflect.ownKeys(obj)
 　　Reflect.ownKeys返回一个数组，包含对象自身的所有属性，不管是属性名是Symbol或字符串，也不管是否可枚举。
+
+## 检测屏幕分辨率
+window.devicePixelRatio
