@@ -33,3 +33,11 @@ Object.getOwnPropertyNames()
 
 ## 检测屏幕分辨率
 window.devicePixelRatio
+
+## flatten
+```javascript
+const flatten = arr => arr.reduce((flat, next) => flat.concat(Array.isArray(next) ? flatten(next) : next), [])
+Array.prototype.flatten = function() {
+  return this.reduce((flat, next) => flat.concat(Array.isArray(next) ? next.flatten() : next), [])
+}
+```
