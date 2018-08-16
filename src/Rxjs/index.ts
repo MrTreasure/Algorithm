@@ -15,3 +15,20 @@ const theObserver = {
 }
 
 $source.subscribe(theObserver)
+
+
+function map (project) {
+  return new Observable(observer => {
+    this.subscribe({
+      next (value) {
+        observer.next(project(value))
+      },
+      error (error) {
+        observer.error(error)
+      },
+      complate () {
+        observer.complete()
+      }
+    })
+  })
+}

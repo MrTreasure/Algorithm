@@ -41,3 +41,17 @@ Array.prototype.flatten = function() {
   return this.reduce((flat, next) => flat.concat(Array.isArray(next) ? next.flatten() : next), [])
 }
 ```
+
+### let var const 的转换(bebel实现)
+```javascript
+// ES6
+let a = 13
+{
+    let a = 12
+}
+// 转换ES5
+var a = 13;
+{
+    var a_1 = 12;
+}
+```
