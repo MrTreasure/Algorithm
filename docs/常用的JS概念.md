@@ -42,7 +42,7 @@ Array.prototype.flatten = function() {
 }
 ```
 
-### let var const 的转换(bebel实现)
+## let var const 的转换(bebel实现)
 ```javascript
 // ES6
 let a = 13
@@ -55,3 +55,10 @@ var a = 13;
     var a_1 = 12;
 }
 ```
+
+## js中的作用域
+1. 函数作用域
+2. try catch
+3. with
+4. let foo = funciton bar() {}
+5. 函数参数默认值的 function(name = 'Treasure') {}
