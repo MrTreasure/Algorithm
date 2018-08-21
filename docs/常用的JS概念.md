@@ -62,3 +62,24 @@ var a = 13;
 3. with
 4. let foo = funciton bar() {}
 5. 函数参数默认值的 function(name = 'Treasure') {}
+
+## 自行实现Symbol.iterator
+```javascript
+// [...3] => [1, 2, 3]
+Number.prototype[Symbol.iterator] = function () {
+    var self = this;
+    var index = 0;
+    return {
+        next: function () {
+            if (index < self) {
+                index++;
+                return { value: index, done: false };
+            }
+            else {
+                return { value: undefined, done: true };
+            }
+        }
+    };
+};
+console.log([...3]);
+```
