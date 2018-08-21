@@ -184,4 +184,14 @@ export class Tree {
     }
   }
 
+  private invertTree (root) {
+    if (!root) return null
+    root.left = this.invertTree(root.left)
+    root.right = this.invertTree(root.right)
+    let tmp = root.left
+    root.left = root.right
+    root.riht = tmp
+    return root
+  }
+
 }
