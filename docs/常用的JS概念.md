@@ -40,6 +40,20 @@ const flatten = arr => arr.reduce((flat, next) => flat.concat(Array.isArray(next
 Array.prototype.flatten = function() {
   return this.reduce((flat, next) => flat.concat(Array.isArray(next) ? next.flatten() : next), [])
 }
+// 非递归实现
+function flatten(arr) {
+  const stack = [...arr].reverse()
+  const copy = []
+  while (stack.length) {
+    let o = stack.pop()
+    if (Array.isArray(o)) {
+      stack.push(...o.reverse())
+    } else {
+      copy.push(o)
+    }
+  }
+  return copy
+}
 ```
 
 ## let var const 的转换(bebel实现)
