@@ -97,3 +97,5 @@ Number.prototype[Symbol.iterator] = function () {
 };
 console.log([...3]);
 ```
+
+## javascript使用UTF-16进行编码
