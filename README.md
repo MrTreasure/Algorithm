@@ -34,6 +34,7 @@
     * [Vue原型的初始化](./docs/vue笔记/01.md)
     * [面试可能提问关键的几个函数](./docs/vue笔记/02.md)
     * [Vue对模板的解析](./docs/vue笔记/03.md)
+* [前端File那些事](./docs/前端File那些事.md)
 
 ## 算法
 * [消息队列](./src/RabbitMQ)
