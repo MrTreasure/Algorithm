@@ -31,3 +31,49 @@ reader.onload = function (e) {
   cconsole.log(reader.result)
 }
 ```
+
+## 上传图片并预览
+```javascript
+const file = input.files[0]
+
+// 同步的方法
+const url = window.URL.createObjectURL(file)
+img.src = url
+```
+
+## 从剪贴板中获取图片
+```javascript
+document.addEventListener('paste', function(e) {
+  if (e.clipboardData.items[0].type === 'image/png') {
+    const blob = e.clipboardData.items[0].getAsFile()
+    const reader = new FileReader()
+    reader.onload = function (e) {
+      const img = document.createElement('img')
+      img.height = 400
+      img.width = 300
+      img.src = e.target.result
+      document.body.appendChild(img)
+
+    }
+    reader.readAsDataURL(blob)
+  }
+})
+```
+
+## websocket获取图片
+```javascript
+wx.onmessage = e => {
+  if (typeof (e.data) !== 'string') {
+        const reader = new FileReader()
+    reader.onload = function (e) {
+      const img = document.createElement('img')
+      img.height = 400
+      img.width = 300
+      img.src = e.target.result
+      document.body.appendChild(img)
+
+    }
+    reader.readAsDataURL(e.data)
+  }
+}
+```
