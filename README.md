@@ -36,6 +36,7 @@
     * [Vue对模板的解析](./docs/vue笔记/03.md)
 * [前端File那些事](./docs/前端File那些事.md)
 * [大厂的第一堂课：完整的git流程](./docs/大厂的第一堂课：完整的git流程.md)
+* [Vue打包优化之路](https://zhuanlan.zhihu.com/p/48461259)
 
 ## 算法
 * [消息队列](./src/RabbitMQ)
