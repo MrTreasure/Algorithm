@@ -7,7 +7,7 @@
 * **邮箱** treasurewmj@foxmail.com
 * **Github** https://github.com/MrTreasure
 * **毕业院校** 成都大学 数字媒体技术 本科
-* **个人荣誉** 2019 中国 JSConf 受邀讲师；知乎前端话题下活跃回答者
+* **个人荣誉** 第 4 届前端开发者大会受邀讲师；知乎前端话题下活跃回答者
 * **意向** 中台开发 serverless
 
 
