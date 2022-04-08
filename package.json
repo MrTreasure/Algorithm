@@ -43,7 +43,7 @@
     "fs-extra": "^5.0.0",
     "koa": "^2.5.2",
     "mobx": "^5.0.3",
-    "moment": "^2.22.2",
+    "moment": "^2.29.2",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.2.2",
     "snabbdom": "^0.7.1",
